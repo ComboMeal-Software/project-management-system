@@ -147,10 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DeadlineManager.cpp" />
+    <ClCompile Include="DescriptionManager.cpp" />
+    <ClCompile Include="ProjectClass.cpp" />
     <ClCompile Include="ProjectManagementSystem.cpp" />
+    <ClCompile Include="StatusManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DeadlineManager.h" />
+    <ClInclude Include="DescriptionManager.h" />
     <ClInclude Include="ProjectClass.h" />
+    <ClInclude Include="StatusManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

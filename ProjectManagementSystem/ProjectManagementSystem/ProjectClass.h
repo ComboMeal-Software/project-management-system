@@ -1,70 +1,67 @@
 // Project Class header file
 // It contains the abstract class and two derived Project classes (Mandatory and Optional)
 
+#pragma once
 #ifndef PROJECTCLASS_H
 #define PROJECTCLASS_H
 
 #include <iostream>
 #include <vector>
 #include <map>
+#include <string>
 
-using namespace std;
+class DeadlineManager;
+class DescriptionManager;
+class StatusManager;
+class User;
 
 class Project //Abstract
 {
 private:
-	string name;
-	string objective;
-	string tasks;
-	string subjectField;
-	string client;
-	vector<string> Prerequisites;
-	//StatusManager* status;
-	//DeadlineManager* deadline;
-	//User* pnitiator;
-	//User* panager;
-	//map<string, User*> participants;
+	DescriptionManager *description;
+	vector<std::string> Prerequisites;
+	StatusManager *statusIndicator;
+	DeadlineManager *deadline;
+	User *initiator;
+	User *manager;
+	map<std::string, User*> participants;
 	// --Private methods--
-	void setStatus(string status);
-	void setClient(string client);
-	//void setManager(User &client);
-	void setDeadline(string deadline);
-	void setObjective(string objective);
-	void setTasks(string tasks);
-	void setSubjectField(string subjectField);
-	void addPrerequisites(string prerequisites);
-	//virtual void addParticipant(User& participant) = 0; //Pure virtual method!
+	void setStatus(std::string status);
+	void setManager(User &client);
+	void setDeadline(std::string deadline);
+	void addPrerequisites(std::string prerequisites);
+	virtual void addParticipant(User &participant) = 0; //Pure virtual method!
 public:
 	void findParticipants();
-	void changeInfo();
-	//User* getInitiator();
-	string getClient();
-	//User* getManager();
-	//map<string, User*> participants;
-	string getSubjectField();
-	string getName();
-	string getObjective();
-	string getTasks();
-	string getDeadline();
-	vector<string> getPrerequisites();
-	string getStatus();
+	void editInfo();
+	User* getInitiator();
+	std::string getClient();
+	User* getManager();
+	map<std::string, User*> participants;
+	std::string getSubjectField();
+	std::string getName();
+	std::string getObjective();
+	std::string getTasks();
+	std::string getDeadline();
+	vector<std::string> getPrerequisites();
+	std::string getStatus();
 	friend ostream& operator<<(ostream& os, const Project& pr);
 };
 
 class MandatoryProject : Project {
 private:
-	//void addParticipant(User& participant);
+	void addParticipant(User &participant);
 public:
-	//MandatoryProject(User& initiator, string name, string objective, string tasks, string subjectField, string deadline, string prerequisites);
-	//~MandatoryProject(); //Gotta work on this
+	MandatoryProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
+	~MandatoryProject(); //Gotta work on this
 };
 
 class OptionalProject : Project {
 private:
-	//void addParticipant(User& participant);
+	void addParticipant(User &participant);
 public:
-	//OptionalProject(User& initiator, string name, string objective, string tasks, string subjectField, string deadline, string prerequisites);
-	//~OptionalProject(); //Gotta work on this
+	OptionalProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
+	~OptionalProject(); //Gotta work on this
 };
 
 #endif
