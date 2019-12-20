@@ -8,14 +8,19 @@
 class DeadlineManager
 {
 private:
+	std::string date;
 	unsigned char day;
 	unsigned char month;
 	unsigned short year;
+	void stringToDate(std::string dt);
 public:
-	DeadlineManager(std::string date);
-	~DeadlineManager();
-	void editDeadline(std::string date);
+	DeadlineManager(std::string dt);
+	~DeadlineManager() {};
+	void editDeadline(std::string dt);
 	std::string getDeadline();
+	int getDeadlineDay();
+	int getDeadlineMonth();
+	int getDeadlineYear();
 };
 
 #endif

@@ -10,13 +10,10 @@ static const std::string StatusStrings[] = { "Initialization", "Recruitment", "A
 class StatusManager
 {
 private:
-	enum Status Indicator;
+	enum Status Indicator = Initialization;
 public:
-	StatusManager()
-	{
-		Indicator = Initialization;
-	}
-	~StatusManager() {};
+	StatusManager(){};
+	~StatusManager(){};
 	void setStatus(std::string status);
 	std::string getStatus();
 };

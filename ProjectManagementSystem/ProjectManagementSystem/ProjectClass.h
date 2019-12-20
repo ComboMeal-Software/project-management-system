@@ -19,7 +19,6 @@ class Project //Abstract
 {
 private:
 	DescriptionManager *description;
-	vector<std::string> Prerequisites;
 	StatusManager *statusIndicator;
 	DeadlineManager *deadline;
 	User *initiator;
@@ -35,16 +34,15 @@ public:
 	void findParticipants();
 	void editInfo();
 	User* getInitiator();
-	std::string getClient();
 	User* getManager();
-	map<std::string, User*> participants;
+	map<std::string, User*> getParticipants();
 	std::string getSubjectField();
 	std::string getName();
-	std::string getObjective();
-	std::string getTasks();
-	std::string getDeadline();
-	vector<std::string> getPrerequisites();
+	std::string getDeadlineDay();
+	std::string getDeadlineMonth();
+	std::string getDeadlineYear();
 	std::string getStatus();
+	std::vector<std::string> getPrerequisites();
 	friend ostream& operator<<(ostream& os, const Project& pr);
 };
 
