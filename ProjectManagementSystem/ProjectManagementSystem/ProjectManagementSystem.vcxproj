@@ -151,12 +151,14 @@
     <ClCompile Include="DescriptionManager.cpp" />
     <ClCompile Include="ProjectClass.cpp" />
     <ClCompile Include="ProjectManagementSystem.cpp" />
+    <ClCompile Include="RoleManager.cpp" />
     <ClCompile Include="StatusManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeadlineManager.h" />
     <ClInclude Include="DescriptionManager.h" />
     <ClInclude Include="ProjectClass.h" />
+    <ClInclude Include="RoleManager.h" />
     <ClInclude Include="StatusManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

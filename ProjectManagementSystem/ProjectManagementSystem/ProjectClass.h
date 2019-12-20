@@ -12,30 +12,25 @@
 
 class DeadlineManager;
 class DescriptionManager;
+class RoleManager;
 class StatusManager;
 class User;
 
 class Project //Abstract
 {
 private:
+	DeadlineManager* deadline;
 	DescriptionManager *description;
+	RoleManager* roles;
 	StatusManager *statusIndicator;
-	DeadlineManager *deadline;
-	User *initiator;
-	User *manager;
-	map<std::string, User*> participants;
 	// --Private methods--
-	void setStatus(std::string status);
-	void setManager(User &client);
-	void setDeadline(std::string deadline);
-	void addPrerequisites(std::string prerequisites);
 	virtual void addParticipant(User &participant) = 0; //Pure virtual method!
 public:
 	void findParticipants();
 	void editInfo();
 	User* getInitiator();
 	User* getManager();
-	map<std::string, User*> getParticipants();
+	std::map<std::string, User*> getParticipants();
 	std::string getSubjectField();
 	std::string getName();
 	std::string getDeadlineDay();
@@ -43,7 +38,7 @@ public:
 	std::string getDeadlineYear();
 	std::string getStatus();
 	std::vector<std::string> getPrerequisites();
-	friend ostream& operator<<(ostream& os, const Project& pr);
+	friend std::ostream& operator<<(std::ostream& os, const Project& pr);
 };
 
 class MandatoryProject : Project {
