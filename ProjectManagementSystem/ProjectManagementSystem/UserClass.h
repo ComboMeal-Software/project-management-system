@@ -16,7 +16,9 @@ class NotificationManager;
 
 class User {
 private:
+
 	// Private fields
+
 	std::string name;
 	std::string password;
 	int freetime;
@@ -26,15 +28,19 @@ private:
 	std::vector<float> rating;
 	std::vector<std::string> prerequisites;
 	std::vector<std::string> StudyFields;
+
 	// Private methods
-	void setName(std::string name);
+	void setName(std::string name); //UserInfoManager >
 	void changeFreetime(int time);
 	void addCurrentProjects(Project& project);
 	void addFinishedProjects(Project& project);
 	void addPrerequisites(std::string prerequisite);
-	void addStudyFields(std::string StudyFields);
+	void addStudyFields(std::string StudyFields); // < UserInfoManager
+
 public:
+
 	// Public methods
+
 	User(std::string name, std::string password, int free_time, std::string prerequisites, std::string StudyFields);
 	void addNewNotification(Notification notification);
 	std::string getName();
@@ -43,12 +49,12 @@ public:
 	std::map<std::string, Project*> getCurrentProjects();
 	std::map<std::string, Project*> getFinishedProjects();
 	std::vector<std::string> getPrerequisites();
-	std::string checkPassword(std::string pass);
-	void changeInfo(); // ?
-	void chechNotifications();
+	bool checkPassword(std::string pass);
+	void changeInfo(); // UserInfoManager
+	void checkNotifications(); //
 	void checkNewProjects();
 	void checkCurrentProjects();
-	void displayFinishedProjects(); // needed or not? seems like interface thing, we already got getFinishedProjects
+	void displayFinishedProjects(); // needed or not? seems like an interface thing, we already got getFinishedProjects
 	void findNewProjects();
 	void applyToNewProjects(Project* activeProject);
 	void workOnProject(Project* activeProject);
