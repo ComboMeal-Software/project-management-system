@@ -148,9 +148,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ProjectManagementSystem.cpp" />
+    <ClCompile Include="UserClass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectClass.h" />
+    <ClInclude Include="UserClass.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
