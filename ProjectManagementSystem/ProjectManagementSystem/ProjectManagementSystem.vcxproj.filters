@@ -18,6 +18,9 @@
     <ClCompile Include="ProjectManagementSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="UserClass.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
     <ClCompile Include="ProjectClass.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -36,6 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DeadlineManager.h">

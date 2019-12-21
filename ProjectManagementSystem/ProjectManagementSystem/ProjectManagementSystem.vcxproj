@@ -151,6 +151,7 @@
     <ClCompile Include="DescriptionManager.cpp" />
     <ClCompile Include="ProjectClass.cpp" />
     <ClCompile Include="ProjectManagementSystem.cpp" />
+    <ClCompile Include="UserClass.cpp" />
     <ClCompile Include="RoleManager.cpp" />
     <ClCompile Include="StatusManager.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="DeadlineManager.h" />
     <ClInclude Include="DescriptionManager.h" />
     <ClInclude Include="ProjectClass.h" />
+    <ClInclude Include="UserClass.h" />
     <ClInclude Include="RoleManager.h" />
     <ClInclude Include="StatusManager.h" />
   </ItemGroup>
