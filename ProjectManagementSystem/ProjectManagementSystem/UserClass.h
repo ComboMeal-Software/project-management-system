@@ -60,6 +60,7 @@ public:
 	void workOnProject(Project* activeProject);
 	void collectRating(float newRating);
 	void createProject();
+	void deleteProject(std::string name);
 	~User();
 	friend std::ostream& operator<<(std::ostream &out, const User &user);
 };
