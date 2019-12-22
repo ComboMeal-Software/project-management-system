@@ -15,7 +15,7 @@ DeadlineManager::DeadlineManager(std::string dt)
 	stringToDate(dt);
 }
 
-void DeadlineManager::editDeadline(std::string dt)
+void DeadlineManager::setDeadline(std::string dt)
 {
 	date = dt;
 	stringToDate(dt);

@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="DeadlineManager.cpp" />
     <ClCompile Include="DescriptionManager.cpp" />
     <ClCompile Include="ProjectClass.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="UserInfoManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Database.h" />
     <ClInclude Include="DeadlineManager.h" />
     <ClInclude Include="DescriptionManager.h" />
     <ClInclude Include="ProjectClass.h" />

@@ -15,7 +15,7 @@ private:
 	std::string client;
 	std::vector<std::string> Prerequisites;
 public:
-	DescriptionManager(std::string n, std::string ob, std::string t, std::string sf, std::string c);
+	DescriptionManager(std::string n, std::string ob, std::string t, std::string sf, std::string c, std::string prer);
 	~DescriptionManager() {};
 	void setName(std::string n);
 	void setObjective(std::string ob);
