@@ -1,19 +1,19 @@
 #include "RoleManager.h"
 #include "UserClass.h"
 
-RoleManager::RoleManager(User& init)
+RoleManager::RoleManager(User* init)
 {
-	initiator = &init;
+	initiator = init;
 }
 
-void RoleManager::setManager(User& mngr)
+void RoleManager::setManager(User* mngr)
 {
-	manager = &mngr;
+	manager = mngr;
 }
 
-void RoleManager::addParticipant(User& part)
+void RoleManager::addParticipant(User* part)
 {
-	participants.insert({ part.getName, &part });
+	participants.insert({ part->getName, part });
 }
 
 User* RoleManager::getInitiator()
@@ -29,4 +29,15 @@ User* RoleManager::getManager()
 std::map<std::string, User*> RoleManager::getParticipants()
 {
 	return participants;
+}
+
+void RoleManager::removeParticipant(std::string name)
+{
+	if (initiator->getName() == name)
+		initiator = NULL;
+	else
+		if (manager->getName() == name)
+			manager = NULL;
+		else
+			participants.erase(name);
 }

@@ -9,14 +9,20 @@
 #include "StatusManager.h"
 #include "UserClass.h"
 
-void Project::findParticipants()
-{
 
+void Project::addParticipant(User* participant)
+{
+	roles->addParticipant(participant);
 }
 
-void Project::editInfo()
+void Project::setManager(User* mngr)
 {
+	roles->setManager(mngr);
+}
 
+void Project::removeParticipant(std::string name)
+{
+	roles->removeParticipant(name);
 }
 
 User* Project::getInitiator()
@@ -81,7 +87,7 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 	std::vector<std::string> *temp = &pr.description->getPrerequisites();
 	for (int i = 0; i < temp->size(); i++)
 	{
-		os << temp->operator[](i) << " ";
+		os << temp->operator[](i) << ", ";
 	}
 	os << std::endl;
 	os << "Deadline - " << pr.deadline->getDeadline() << std::endl;
@@ -89,15 +95,15 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 	os << "Initiator - " << pr.roles->getInitiator()->getName() << std::endl;
 	os << "Manager - " << pr.roles->getManager()->getName() << std::endl;
 	os << "Participants: ";
-	std::map<std::string, User*>* mtemp = &pr.roles->getParticipants();
-	for (const std::pair<std::string, User*>& p : mtemp->begin)
+	std::map<std::string, User*> mtemp = pr.roles->getParticipants();
+	for (const std::pair<std::string, User*>& p : mtemp)
 	{
 		os << p.first << ", ";
 	}
 	os << std::endl;
 }
 
-MandatoryProject::MandatoryProject(User& initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string dl, std::string prerequisites)
+Project::Project(User* initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string dl, std::string prerequisites)
 {
 	deadline = new DeadlineManager(dl);
 	description = new DescriptionManager(name, objective, tasks, subjectField, client, prerequisites);
@@ -105,20 +111,17 @@ MandatoryProject::MandatoryProject(User& initiator, std::string name, std::strin
 	statusIndicator = new StatusManager();
 }
 
-OptionalProject::OptionalProject(User& initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string dl, std::string prerequisites)
+Project::~Project()
 {
-	deadline = new DeadlineManager(dl);
-	description = new DescriptionManager(name, objective, tasks, subjectField, client, prerequisites);
-	roles = new RoleManager(initiator);
-	statusIndicator = new StatusManager();
-}
-
-void MandatoryProject::addParticipant(User& participant)
-{
-	//Got an idea here! Gonna describe it on GitHub.
-}
-
-void OptionalProject::addParticipant(User& participant)
-{
-	//Got an idea here! Gonna describe it on GitHub.
+	std::map<std::string, User*> tempm = roles->getParticipants();
+	tempm.insert(std::pair<std::string, User*>(roles->getInitiator()->getName(), roles->getInitiator()));
+	tempm.insert(std::pair<std::string, User*>(roles->getManager()->getName(), roles->getManager()));
+	for (const std::pair<std::string, User*>& p : tempm)
+	{
+		p.second->deleteProject(description->getName());
+	}
+	delete deadline;
+	delete description;
+	delete statusIndicator;
+	delete roles;
 }
