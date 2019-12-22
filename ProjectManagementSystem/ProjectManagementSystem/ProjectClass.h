@@ -18,7 +18,7 @@ class User;
 
 class Project //Abstract
 {
-private:
+protected:
 	DeadlineManager* deadline;
 	DescriptionManager *description;
 	RoleManager* roles;
@@ -41,19 +41,19 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Project& pr);
 };
 
-class MandatoryProject : Project {
+class MandatoryProject : public Project {
 private:
 	void addParticipant(User &participant);
 public:
-	MandatoryProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
+	MandatoryProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string deadline, std::string prerequisites);
 	~MandatoryProject(); //Gotta work on this
 };
 
-class OptionalProject : Project {
+class OptionalProject : public Project {
 private:
 	void addParticipant(User &participant);
 public:
-	OptionalProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
+	OptionalProject(User& initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string deadline, std::string prerequisites);
 	~OptionalProject(); //Gotta work on this
 };
 

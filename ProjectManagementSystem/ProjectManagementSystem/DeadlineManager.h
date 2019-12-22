@@ -16,7 +16,7 @@ private:
 public:
 	DeadlineManager(std::string dt);
 	~DeadlineManager() {};
-	void editDeadline(std::string dt);
+	void setDeadline(std::string dt);
 	std::string getDeadline();
 	int getDeadlineDay();
 	int getDeadlineMonth();

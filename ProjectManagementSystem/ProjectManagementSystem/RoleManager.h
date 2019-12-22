@@ -15,7 +15,7 @@ private:
 	User* manager;
 	std::map<std::string, User*> participants;
 public:
-	void setInitiator(User& init);
+	RoleManager(User& init);
 	void setManager(User& mngr);
 	void addParticipant(User& part);
 	User* getInitiator();

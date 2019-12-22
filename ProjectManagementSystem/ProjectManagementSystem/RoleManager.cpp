@@ -1,6 +1,6 @@
 #include "RoleManager.h"
 
-void RoleManager::setInitiator(User& init)
+RoleManager::RoleManager(User& init)
 {
 	initiator = &init;
 }
