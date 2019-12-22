@@ -83,7 +83,7 @@ User::~User() {
 	}
 	delete notifications;
 	delete infoManager;
-	//delete ratingManager
+	delete ratingManager;
 
 }
 
