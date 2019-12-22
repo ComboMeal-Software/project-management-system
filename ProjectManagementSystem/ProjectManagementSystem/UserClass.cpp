@@ -1,120 +1,115 @@
 #include "UserClass.h"
 #include "ProjectClass.h"
+#include "UserInfoManager.h"
+#include "RatingManager.h"
 
 User::User(std::string n, std::string pass, int free_time, std::string prerequisites, std::string StudyFields) {
 
-	setName(n);
-	freetime = 0;
-	changeFreetime(free_time);
-	addPrerequisites(prerequisites);
-	addStudyFields(StudyFields);
+	notifications = new NotificationManager();
+	ratingManager = new RatingManager();
+	infoManager = new UserInfoManager();
+	infoManager->setName(n);
+	infoManager->changeFreetime(free_time);
+	infoManager->addPrerequisites(prerequisites);
+	infoManager->addStudyFields(StudyFields);
+	
+}
+void User::changeInfo() {
+
+	// Gotta work on this
 
 }
-void User::setName(std::string n) {
 
-	name = n;
-
-}
-void User::changeFreetime(int time)
-{
-
-	freetime += time; // can be +time or -time, depends on what we want. but we need to check that freetime is not below zero! #exception
-
-}
-void User::addPrerequisites(std::string pr)
-{ // checking right input? #exception
-
-	while (pr.find(",") != std::string::npos)
-	{
-		prerequisites.push_back(pr.substr(0, pr.find(",")));
-		pr.substr(pr.find(",") + 1);
-	}
-	prerequisites.push_back(pr);
-
-}
-void User::addStudyFields(std::string sf) { // checking right input? #exception
-
-	while (sf.find(",") != std::string::npos)
-	{
-		StudyFields.push_back(sf.substr(0, sf.find(",")));
-		sf.substr(sf.find(",") + 1);
-	}
-	StudyFields.push_back(sf);
-
-}
-void User::addCurrentProjects(Project& project) {
-
-	/*
-
-	 currentProjects.insert(std::make_pair(project.getName(), project));
-
-	 code below is more safe IMO, we don't need to check is project already in currentProjects or not
-	 if it is already inside currentProjects, nothing happens
-
-	 */
-
-	currentProjects[project.getName()] = &project;
-
-}
-void User::addFinishedProjects(Project& project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
-
-	finishedProjects[project.getName()] = &project;
-	std::map<std::string, Project*> ::iterator old_project;
-	old_project = currentProjects.find(project.getName());
-	currentProjects.erase(old_project);
-
-}
 std::string User::getName() {
 
-	return name;
+	infoManager->getName();
 
 }
+
 int User::getFreetime() {
 
-	return freetime;
-
+	infoManager->getFreetime();
+  
 }
+
 float User::getRating() {
 
-	float count;
-	int sum = 0;
-	//rating.size()
-	for (int i = 0; i < rating.size(); i++)
-		sum += rating[i];
-	count = (float)sum / rating.size();
-	return count;
+	ratingManager->getRating();
 
 }
 std::map<std::string, Project*> User::getCurrentProjects() {
 
-	return currentProjects;
+	infoManager->getCurrentProjects();
 
 }
 std::map<std::string, Project*> User::getFinishedProjects() {
 
-	return finishedProjects;
+	infoManager->getFinishedProjects();
 
 }
 std::vector<std::string> User::getPrerequisites() {
 
-	return prerequisites;
+	infoManager->getPrerequisites();
+
+}
+std::vector<std::string> User::getStudyFields() {
+
+	infoManager->getStudyFields();
 
 }
 bool User::checkPassword(std::string pass) {
 
-	if (pass == password)
-		return true;
-	else
-		return false;
+	infoManager->checkPassword(pass);
 
 }
 void User::collectRating(float newRating) {
 
-	rating.push_back(newRating);
-}
+	ratingManager->collectRating(newRating);
 
+}
+void User::deleteProject(std::string name) {
+
+	infoManager->deleteProject(name);
+  
+}
 User::~User() {
 
-	// Gotta work on this
+	for (const std::pair<std::string, Project*>& p : infoManager->getCurrentProjects()) {
+
+		p.second->removeParticipant(infoManager->getName());
+
+	}
+	for (const std::pair<std::string, Project*>& p : infoManager->getFinishedProjects()) {
+
+		p.second->removeParticipant(infoManager->getName());
+
+	}
+	delete notifications;
+	delete infoManager;
+	//delete ratingManager
+
+}
+
+std::ostream& operator<<(std::ostream& os, const User& user) {
+
+	os << "User " << user.infoManager->getName() << std::endl;
+	os << "Rating: " << user.ratingManager->getRating() << std::endl;
+	os << "Current projects: " << user.infoManager->getCurrentProjects().size() << std::endl;
+	os << "Finished projects: " << user.infoManager->getFinishedProjects().size() << std::endl;
+	os << "Prerequisites: ";
+	for (int i = 0; i < user.infoManager->getPrerequisites().size(); i++) {
+		os << user.infoManager->getPrerequisites()[i];
+		if (i != user.infoManager->getPrerequisites().size() - 1)
+			os << ", ";
+	}
+	os << std::endl;
+	os << "Study Fields: ";
+	for (int i = 0; i < user.infoManager->getStudyFields().size(); i++) {
+		os << user.infoManager->getStudyFields()[i];
+		if (i != user.infoManager->getStudyFields().size() - 1)
+			os << ", ";
+	}
+	os << std::endl;
+	os << "Free time: " << user.infoManager->getFreetime() << std::endl;
 
 }
