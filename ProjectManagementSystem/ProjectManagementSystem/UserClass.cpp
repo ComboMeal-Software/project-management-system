@@ -1,4 +1,5 @@
 #include "UserClass.h"
+#include "ProjectClass.h"
 
 User::User(std::string n, std::string pass, int free_time, std::string prerequisites, std::string StudyFields) {
 
@@ -14,19 +15,21 @@ void User::setName(std::string n) {
 	name = n;
 
 }
-void User::changeFreetime(int time); {
+void User::changeFreetime(int time)
+{
 
 	freetime += time; // can be +time or -time, depends on what we want. but we need to check that freetime is not below zero! #exception
 
 }
-void User::addPrerequisites(std::string pr) { // checking right input? #exception
+void User::addPrerequisites(std::string pr)
+{ // checking right input? #exception
 
 	while (pr.find(",") != std::string::npos)
 	{
-		Prerequisites.push_back(pr.substr(0, pr.find(",")));
+		prerequisites.push_back(pr.substr(0, pr.find(",")));
 		pr.substr(pr.find(",") + 1);
 	}
-	Prerequisites.push_back(pr);
+	prerequisites.push_back(pr);
 
 }
 void User::addStudyFields(std::string sf) { // checking right input? #exception
@@ -50,12 +53,12 @@ void User::addCurrentProjects(Project& project) {
 
 	 */
 
-	currentProjects[project.getName()] = project;
+	currentProjects[project.getName()] = &project;
 
 }
 void User::addFinishedProjects(Project& project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
 
-	finishedProjects[project.getName()] = project;
+	finishedProjects[project.getName()] = &project;
 	std::map<std::string, Project*> ::iterator old_project;
 	old_project = currentProjects.find(project.getName());
 	currentProjects.erase(old_project);
@@ -84,12 +87,12 @@ float User::getRating() {
 }
 std::map<std::string, Project*> User::getCurrentProjects() {
 
-	return currentProjects();
+	return currentProjects;
 
 }
 std::map<std::string, Project*> User::getFinishedProjects() {
 
-	return finishedProjects();
+	return finishedProjects;
 
 }
 std::vector<std::string> User::getPrerequisites() {
@@ -108,9 +111,8 @@ bool User::checkPassword(std::string pass) {
 void User::collectRating(float newRating) {
 
 	rating.push_back(newRating);
-
-	~
 }
+
 User::~User() {
 
 	// Gotta work on this

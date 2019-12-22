@@ -24,7 +24,7 @@ private:
 	int freetime;
 	std::map<std::string, Project*> currentProjects;
 	std::map<std::string, Project*> finishedProjects;
-	NotificationManager notifications;
+	NotificationManager *notifications;
 	std::vector<float> rating;
 	std::vector<std::string> prerequisites;
 	std::vector<std::string> StudyFields;

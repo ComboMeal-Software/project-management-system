@@ -1,4 +1,5 @@
 #include "RoleManager.h"
+#include "UserClass.h"
 
 RoleManager::RoleManager(User& init)
 {
@@ -12,7 +13,7 @@ void RoleManager::setManager(User& mngr)
 
 void RoleManager::addParticipant(User& part)
 {
-	//participants.insert({ part.getName, &part }); //include the User class first!
+	participants.insert({ part.getName, &part });
 }
 
 User* RoleManager::getInitiator()
