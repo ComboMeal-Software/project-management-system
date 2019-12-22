@@ -21,7 +21,7 @@ private:
 
 	// Private fields
   
-  NotificationManager* notifications;
+	NotificationManager* notifications;
 	UserInfoManager* infoManager;
 	RatingManager* ratingManager;
 

@@ -5,7 +5,7 @@
 
 User::User(std::string n, std::string pass, int free_time, std::string prerequisites, std::string StudyFields) {
 
-	notifications = new NotificationManager();
+	//notifications = new NotificationManager();
 	ratingManager = new RatingManager();
 	infoManager = new UserInfoManager();
 	infoManager->setName(n);
