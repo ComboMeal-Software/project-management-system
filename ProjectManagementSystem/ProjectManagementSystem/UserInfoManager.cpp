@@ -105,11 +105,3 @@ void UserInfoManager::deleteProject(std::string name) {
 	else
 		finishedProjects.erase(name);
 }
-bool User::checkPassword(std::string pass) {
-
-	if (pass == password)
-		return true;
-	else
-		return false;
-
-}
