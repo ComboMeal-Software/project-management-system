@@ -1,12 +1,13 @@
 #include "DescriptionManager.h"
 
-DescriptionManager::DescriptionManager(std::string n, std::string ob, std::string t, std::string sf, std::string c)
+DescriptionManager::DescriptionManager(std::string n, std::string ob, std::string t, std::string sf, std::string c, std::string prer)
 {
 	name = n;
 	objective = ob;
 	tasks = t;
 	subjectField = sf;
 	client = c;
+	addPrerequisites(prer);
 }
 
 void DescriptionManager::setName(std::string n)

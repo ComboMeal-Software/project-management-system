@@ -20,8 +20,8 @@ class User {
 private:
 
 	// Private fields
-
-	NotificationManager* notifications;
+  
+  NotificationManager* notifications;
 	UserInfoManager* infoManager;
 	RatingManager* ratingManager;
 
@@ -51,7 +51,6 @@ public:
 	void applyToNewProjects(Project* activeProject);
 	void workOnProject(Project* activeProject);
 	void createProject();
-
 	~User();
 	friend std::ostream& operator<<(std::ostream& os, const User& user);
 };

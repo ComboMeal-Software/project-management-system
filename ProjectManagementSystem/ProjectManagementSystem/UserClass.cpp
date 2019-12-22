@@ -19,16 +19,19 @@ void User::changeInfo() {
 	// Gotta work on this
 
 }
+
 std::string User::getName() {
 
 	infoManager->getName();
 
 }
+
 int User::getFreetime() {
 
 	infoManager->getFreetime();
-
+  
 }
+
 float User::getRating() {
 
 	ratingManager->getRating();
@@ -67,7 +70,7 @@ void User::collectRating(float newRating) {
 void User::deleteProject(std::string name) {
 
 	infoManager->deleteProject(name);
-
+  
 }
 User::~User() {
 

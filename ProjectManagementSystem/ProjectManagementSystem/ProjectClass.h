@@ -21,13 +21,14 @@ class Project //Abstract
 private:
 	DeadlineManager* deadline;
 	DescriptionManager *description;
-	RoleManager* roles;
+	RoleManager *roles;
 	StatusManager *statusIndicator;
-	// --Private methods--
-	virtual void addParticipant(User &participant) = 0; //Pure virtual method!
 public:
-	void findParticipants();
-	void editInfo();
+	Project(User* initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string deadline, std::string prerequisites);
+	void addParticipant(User *participant);
+	void setManager(User* mngr);
+	//void editInfo(); // It's an interface thing so it probably should just be a friend or something
+	void removeParticipant(std::string name);
 	User* getInitiator();
 	User* getManager();
 	std::map<std::string, User*> getParticipants();
@@ -39,22 +40,7 @@ public:
 	std::string getStatus();
 	std::vector<std::string> getPrerequisites();
 	friend std::ostream& operator<<(std::ostream& os, const Project& pr);
-};
-
-class MandatoryProject : Project {
-private:
-	void addParticipant(User &participant);
-public:
-	MandatoryProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
-	~MandatoryProject(); //Gotta work on this
-};
-
-class OptionalProject : Project {
-private:
-	void addParticipant(User &participant);
-public:
-	OptionalProject(User &initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string deadline, std::string prerequisites);
-	~OptionalProject(); //Gotta work on this
+	~Project() {};
 };
 
 #endif
