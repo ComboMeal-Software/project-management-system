@@ -7,7 +7,7 @@
 #include "DescriptionManager.h"
 #include "RoleManager.h"
 #include "StatusManager.h"
-//#include "User.h"
+#include "UserClass.h"
 
 void Project::findParticipants()
 {
@@ -86,8 +86,8 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 	os << std::endl;
 	os << "Deadline - " << pr.deadline->getDeadline() << std::endl;
 	os << "People:" << std::endl;
-	//os << "Initiator - " << pr.roles->getInitiator()->getName() << std::endl;
-	//os << "Manager - " << pr.roles->getManager()->getName() << std::endl;
+	os << "Initiator - " << pr.roles->getInitiator()->getName() << std::endl;
+	os << "Manager - " << pr.roles->getManager()->getName() << std::endl;
 	os << "Participants: ";
 	std::map<std::string, User*>* mtemp = &pr.roles->getParticipants();
 	for (const std::pair<std::string, User*>& p : mtemp->begin)
