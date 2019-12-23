@@ -7,7 +7,7 @@
 #include <iostream>
 #include <string>
 
-enum nType { message, invitation, rating, notify};
+enum nType { message, invitation, rating, notify };
 struct Notification {
 	
 	nType type;
@@ -15,7 +15,7 @@ struct Notification {
 	std::string sender;
 	std::string project;
 
-	Notification(nType type, std::string text, std::string sender, std::string project);
+	Notification( nType type, std::string text, std::string sender, std::string project );
 
 };
 

@@ -19,6 +19,9 @@ private:
 	std::string status;
 public:
 	Interface();
+	void createProject();
+	void findProjects();
+	void displayProjects();
 	~Interface();
 };
 
