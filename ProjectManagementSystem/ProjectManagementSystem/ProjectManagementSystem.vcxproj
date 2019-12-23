@@ -150,6 +150,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DeadlineManager.cpp" />
     <ClCompile Include="DescriptionManager.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="ProjectClass.cpp" />
     <ClCompile Include="ProjectManagementSystem.cpp" />
     <ClCompile Include="RatingManager.cpp" />
