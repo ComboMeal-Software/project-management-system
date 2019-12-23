@@ -74,12 +74,14 @@ void User::deleteProject(std::string name) {
 }
 User::~User() {
 
-	for (const std::pair<std::string, Project*>& p : infoManager->getCurrentProjects()) {
+	std::map<std::string, Project*> temp = infoManager->getCurrentProjects();
+	for (const std::pair<std::string, Project*>& p : temp) {
 
 		p.second->removeParticipant(infoManager->getName());
 
 	}
-	for (const std::pair<std::string, Project*>& p : infoManager->getFinishedProjects()) {
+	temp = infoManager->getFinishedProjects();
+	for (const std::pair<std::string, Project*>& p : temp) {
 
 		p.second->removeParticipant(infoManager->getName());
 
@@ -97,18 +99,20 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 	os << "Current projects: " << user.infoManager->getCurrentProjects().size() << std::endl;
 	os << "Finished projects: " << user.infoManager->getFinishedProjects().size() << std::endl;
 	os << "Prerequisites: ";
-	for (int i = 0; i < user.infoManager->getPrerequisites().size(); i++) {
-		os << user.infoManager->getPrerequisites()[i];
-		if (i != user.infoManager->getPrerequisites().size() - 1)
-			os << ", ";
+	std::vector<std::string> temp = user.infoManager->getPrerequisites();
+	for (int i = 0; i < temp.size() - 1; i++) {
+		os << temp[i];
+		os << ", ";
 	}
+	os << temp[temp.size()-1];
 	os << std::endl;
 	os << "Study Fields: ";
-	for (int i = 0; i < user.infoManager->getStudyFields().size(); i++) {
-		os << user.infoManager->getStudyFields()[i];
-		if (i != user.infoManager->getStudyFields().size() - 1)
-			os << ", ";
+	temp = user.infoManager->getStudyFields();
+	for (int i = 0; i < temp.size() - 1; i++) {
+		os << temp[i];
+		os << ", ";
 	}
+	os << temp[temp.size()];
 	os << std::endl;
 	os << "Free time: " << user.infoManager->getFreetime() << std::endl;
 
