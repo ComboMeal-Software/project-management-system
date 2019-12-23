@@ -18,7 +18,7 @@ std::vector<Notification> NotificationManager::getNewNots() {
 
 void NotificationManager::deleteNotification(int i) {
 
-	new_notifications.erase(i);
+	new_notifications.erase(new_notifications.begin()+i);
 
 }
 
