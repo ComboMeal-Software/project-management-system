@@ -1,8 +1,9 @@
 #include <iostream>
-
-#include "ProjectClass.h"
+#include "Database.h"
+#include "Interface.h"
 
 int main()
 {
-
+	Interface IF;
+	IF.init();
 }

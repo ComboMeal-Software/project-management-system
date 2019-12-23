@@ -48,8 +48,6 @@ void Interface::init() {
 			help();
 
 	} while (true);
-	
-	return;
 }
 
 void Interface::welcome() { // Welocome message.

@@ -18,6 +18,7 @@ User::User(std::string n, std::string pass, int free_time, std::string prerequis
 }
 void User::changeInfo(int i, std::string input) {
 
+	int free_time = stoi(input);
 	switch (i)
 	{
 	case 1:
@@ -29,7 +30,7 @@ void User::changeInfo(int i, std::string input) {
 		break;
 
 	case 3:
-		int free_time = stoi(input);
+		
 		infoManager->changeFreetime(free_time);
 		break;
 	
