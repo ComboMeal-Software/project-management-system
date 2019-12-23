@@ -31,7 +31,7 @@ void NotificationManager::reactNotification(int i, std::string command) {
 	case message:
 		if (command == "mark_as_seen"){
 
-			new_notifications.erase(i);
+			new_notifications.erase(i); // опнакелю
 			break;
 
 		}
