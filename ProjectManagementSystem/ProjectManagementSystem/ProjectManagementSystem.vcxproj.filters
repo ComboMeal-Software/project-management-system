@@ -48,6 +48,9 @@
     <ClCompile Include="Interface.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
+    <ClCompile Include="NotificationStruct.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>r
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectClass.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Interface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NotificationStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
