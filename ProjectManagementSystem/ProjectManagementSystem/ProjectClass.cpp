@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <map>
 #include <vector>
 #include "ProjectClass.h"
@@ -75,26 +75,61 @@ std::string Project::getStatus()
 	statusIndicator->getStatus();
 }
 
+void Project::setClient(std::string client)
+{
+	description->setClient(client);
+}
+
+void Project::setDeadline(std::string dl)
+{
+	deadline->setDeadline(dl);
+}
+
+void Project::setObjective(std::string objective)
+{
+	description->setObjective(objective);
+}
+
+void Project::setPrerequisites(std::string prer)
+{
+	description->setPrerequisites(prer);
+}
+
+void Project::setStatus(std::string status)
+{
+	statusIndicator->setStatus(status);
+}
+
+void Project::setSubjectField(std::string subjectField)
+{
+	description->setSubjectField(subjectField);
+}
+
+void Project::setTasks(std::string tasks)
+{
+	description->setTasks(tasks);
+}
+
 std::ostream& operator<<(std::ostream& os, const Project& pr)
 {
-	os << "Project " << pr.description->getName() << std::endl;
-	os << "Status: " << pr.statusIndicator->getStatus() << std::endl;
-	os << "Objective - " << pr.description->getObjective() << std::endl;
-	os << "Tasks: " << pr.description->getTasks() << std::endl;
-	os << "Subject Field - " << pr.description->getSubjectField() << std::endl;
-	os << "Client - " << pr.description->getClient() << std::endl;
-	os << "Prerequisites: ";
+	os << "Проект " << pr.description->getName() << std::endl;
+	os << "Статус: " << pr.statusIndicator->getStatus() << std::endl;
+	os << "Цель - " << pr.description->getObjective() << std::endl;
+	os << "Задачи: " << pr.description->getTasks() << std::endl;
+	os << "Предметная область - " << pr.description->getSubjectField() << std::endl;
+	os << "Заказчик - " << pr.description->getClient() << std::endl;
+	os << "Необходимые навыки: ";
 	std::vector<std::string> *temp = &pr.description->getPrerequisites();
 	for (int i = 0; i < temp->size(); i++)
 	{
 		os << temp->operator[](i) << ", ";
 	}
 	os << std::endl;
-	os << "Deadline - " << pr.deadline->getDeadline() << std::endl;
-	os << "People:" << std::endl;
-	os << "Initiator - " << pr.roles->getInitiator()->getName() << std::endl;
-	os << "Manager - " << pr.roles->getManager()->getName() << std::endl;
-	os << "Participants: ";
+	os << "Дедлайн - " << pr.deadline->getDeadline() << std::endl;
+	os << "Люди:" << std::endl;
+	os << "Инициатор - " << pr.roles->getInitiator()->getName() << std::endl;
+	os << "Менеджер - " << pr.roles->getManager()->getName() << std::endl;
+	os << "Участники: ";
 	std::map<std::string, User*> mtemp = pr.roles->getParticipants();
 	for (const std::pair<std::string, User*>& p : mtemp)
 	{
