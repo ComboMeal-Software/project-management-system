@@ -18,6 +18,11 @@ User* Database::getUser(std::string name)
 	return users[name];
 }
 
+Project* Database::getProject(std::string name)
+{
+	return projects[name];
+}
+
 void Database::deleteUser(std::string userName)
 {
 	delete users[userName];
