@@ -164,7 +164,6 @@
     <ClInclude Include="Database.h" />
     <ClInclude Include="DeadlineManager.h" />
     <ClInclude Include="DescriptionManager.h" />
-    <ClInclude Include="Interface.h" />
     <ClInclude Include="NotificationStruct.h" />
     <ClCompile Include="Interface.h" />
     <ClInclude Include="ProjectClass.h" />
