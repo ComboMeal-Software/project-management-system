@@ -22,6 +22,7 @@ public:
 	User* getManager();
 	std::map<std::string, User*> getParticipants();
 	void removeParticipant(std::string name);
+	~RoleManager();
 };
 
 #endif

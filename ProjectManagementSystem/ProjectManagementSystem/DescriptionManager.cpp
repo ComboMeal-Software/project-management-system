@@ -39,10 +39,10 @@ void DescriptionManager::addPrerequisites(std::string pr)
 {
 	while (pr.find(",") != std::string::npos)
 	{
-		Prerequisites.push_back(pr.substr(0,pr.find(",")));
+		prerequisites.push_back(pr.substr(0,pr.find(",")));
 		pr.substr(pr.find(",") + 1);
 	}
-	Prerequisites.push_back(pr);
+	prerequisites.push_back(pr);
 }
 
 std::string DescriptionManager::getName()
@@ -72,5 +72,10 @@ std::string DescriptionManager::getClient()
 
 std::vector<std::string> DescriptionManager::getPrerequisites()
 {
-	return Prerequisites;
+	return prerequisites;
+}
+
+DescriptionManager::~DescriptionManager()
+{
+	prerequisites.clear();
 }

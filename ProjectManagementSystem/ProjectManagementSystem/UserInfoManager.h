@@ -37,7 +37,7 @@ public:
 	std::vector<std::string> getPrerequisites();
 	std::vector<std::string> getStudyFields();
 	bool checkPassword(std::string pass);
-
+	~UserInfoManager();
 };
 
 
