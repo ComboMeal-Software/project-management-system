@@ -4,6 +4,8 @@
 #ifndef RATINGMANAGER_H
 #define RATINGMANAGER_H
 
+#include <iostream>
+
 class RatingManager {
 private:
 	std::vector<float> rating;
