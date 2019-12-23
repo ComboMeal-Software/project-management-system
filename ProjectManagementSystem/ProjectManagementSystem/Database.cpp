@@ -18,6 +18,22 @@ User* Database::getUser(std::string name)
 	return users[name];
 }
 
+bool Database::checkUser(std::string name) 
+{
+	if (users.count(name) == 0)
+		return true;
+	else
+		return false;
+}
+
+bool Database::checkProject(std::string name) 
+{
+	if (projects.count(name) == 0)
+		return true;
+	else
+		return false;
+}
+
 Project* Database::getProject(std::string name)
 {
 	return projects[name];

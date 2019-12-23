@@ -6,6 +6,7 @@
 #include <string>
 #include <map>
 
+struct Notification;
 class User;
 class Project;
 class Database;
@@ -21,6 +22,15 @@ private:
 	void editProject(std::string name);
 public:
 	Interface();
+	void init();
+	void welcome();
+	void registerUser(std::string name, std::string password);
+	void login(std::string name, std::string password);
+	void logout();
+	void help();
+	void editInfo();
+	void displayNotification(Notification notification);
+	void checkNotifications();
 	void createProject();
 	void findProjects();
 	void displayProjects();

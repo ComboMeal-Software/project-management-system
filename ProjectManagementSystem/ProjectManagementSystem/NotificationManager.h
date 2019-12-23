@@ -13,16 +13,14 @@ class NotificationManager {
 
 private:
 	std::vector<Notification> new_notifications;
-	User* user;
 
 public:
-	NotificationManager(User* user);
+	NotificationManager();
 	std::vector<Notification> getNewNots();
 	void deleteNotification(int i);
 	void updateNotifications(std::vector<Notification>);
 	void addNotification(Notification notification);
 	int checkNotifications();
-	//void reactNotification(int i, std::string command);
 	~NotificationManager();
 
 };

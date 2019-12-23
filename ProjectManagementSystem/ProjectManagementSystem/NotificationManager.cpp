@@ -5,9 +5,7 @@
 #include <iostream>
 #include <vector>
 
-NotificationManager::NotificationManager(User* us){
-
-	user = us;
+NotificationManager::NotificationManager(){
 
 }
 std::vector<Notification> NotificationManager::getNewNots() {
@@ -43,59 +41,5 @@ int NotificationManager::checkNotifications() {
 
 NotificationManager::~NotificationManager() {
 
-	delete user;
 
 }
-//void NotificationManager::reactNotification(int i, std::string command) {
-//	
-//	switch (type)
-//	{
-//	case message:
-//		if (command == "mark_as_seen"){
-//
-//			new_notifications.erase(i);
-//			break;
-//
-//		}
-//		else
-//			break;
-//
-//	case invitation:
-//		if (command == "accept") {
-//			
-//			Project* project = database->getProject(new_notifications[i].project);
-//			project->addParticipant(user);
-//			delete project;
-//			new_notifications.erase(i);
-//			break;
-//
-//		}
-//		else if (command == "decline"){
-//
-//			new_notifications.erase(i);
-//			break;
-//
-//		}
-//		else
-//			break;
-//
-//	case rating:
-//
-//		if (command == "yes") {
-//
-//		}
-//		else if (command == "no") {
-//
-//			new_notifications.erase(i);
-//			break;
-//
-//		}
-//		else
-//			break;
-//
-//	default:
-//
-//		break;
-//	}
-//
-//}

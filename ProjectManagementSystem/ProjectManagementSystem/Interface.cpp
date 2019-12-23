@@ -10,9 +10,447 @@ Interface::Interface()
 	database = new Database();
 	currentUser = NULL;
 	commands = {
-		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему"}},
-		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления"}}
+		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
+		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", " help - просмотр доступных команд"}}
 	};
+}
+
+void Interface::init() {
+
+	welcome();
+	do {
+		fflush(stdin);
+		std::getline(std::cin, input);
+		std::cout << std::endl;
+		if (input == "exit")
+			break;
+
+		if (input == "register") {
+
+			std::string name;
+			std::string password;
+			std::getline(std::cin, name);
+			std::getline(std::cin, password);
+			registerUser(name, password);
+		}
+			
+		if (input == "login") {
+
+			std::string name;
+			std::string password;
+			std::getline(std::cin, name);
+			std::getline(std::cin, password);
+			login(name, password);
+
+		}
+			
+		if (input == "help")
+			help();
+
+	} while (true);
+	
+	return;
+}
+
+void Interface::welcome() { // Welocome message.
+
+
+	std::cout << std::endl;
+	std::cout << "Combo-Meal Software, Peter the Great St.Petersburg Polytechnic University" << std::endl;
+	std::cout << "Используйте help для вывода доступных команд" << std::endl;
+
+}
+
+void Interface::registerUser(std::string name, std::string password) {
+
+	if (database->checkUser(name)) {
+		fflush(stdin);
+		std::string prerequisites;
+		std::string studyFields;
+		int free_time;
+		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
+		std::cout << "Введите дополнительные данные. В дальнейшем информация может быть изменена." << std::endl;
+		std::cout << "Выйти - back" << std::endl;
+		std::cout << "Введите Ваши навыки через запятую: ";
+		std::getline(std::cin, prerequisites);
+		if (prerequisites == "back")
+			return;
+		std::cout << std::endl;
+		fflush(stdin);
+		std::cout << "Введите Ваши предпочитаемые предметные области через запятую: ";
+		std::getline(std::cin, studyFields);
+		if (studyFields == "back")
+			return;
+		std::cout << std::endl;
+		fflush(stdin);
+		std::cout << "Введите количество Вашего свободное время, которое вы готовы уделять проектам каждую неделю: ";
+		std::string time_string;
+		std::getline(std::cin, time_string);
+		if (time_string == "back")
+			return;
+		free_time = std::stoi(time_string); // #exception
+		fflush(stdin);
+		database->createUser(name, password, free_time, prerequisites, studyFields);
+		std::cout << std::endl;
+		std::cout << "Успешно создан новый профиль \"" << name << "\"!" << std::endl;
+		std::cout << "Пожалуйста, зайдите в систему под своим именем и паролем" << std::endl;
+	}
+	else
+		std::cout << "Пользователь с таким именем уже существует." << std::endl;
+	
+}
+
+void Interface::login(std::string name, std::string password) {
+
+	User* user = database->getUser(name);
+	if (user->checkPassword(password)) {
+
+		currentUser = user;
+		delete user;
+		status = "logged_in";
+		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
+		std::cout << "Новых уведомлений: " << user->checkNotifications() <<std::endl;
+		std::cout << "Для просмотра доступных команд используйте help." << std::endl;
+		std::cout << "Для выхода из системы используйте logout." << std::endl;
+		do {
+
+			fflush(stdin);
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			if (input == "logout") {
+
+				logout();
+				break;
+
+			}
+
+			else if (input == "help")
+				help();
+
+			else if (input == "create_project")
+				createProject();
+
+			else if (input == "my_projects")
+				displayProjects();
+
+			else if (input == "edit_info")
+				editInfo();
+
+			else if (input == "check_notifications")
+				checkNotifications();
+
+			else
+				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд.";
+
+		} while (true);
+		
+	}
+	else {
+
+		std::cout << " Введено неверное имя или пароль. Попробуйте еще раз." << std::endl;
+
+	}
+}
+
+void Interface::logout() {
+
+	currentUser = NULL;
+	status = "start";
+	welcome();
+
+}
+
+void Interface::help() {
+
+	for (int i = 0; i < commands[status].size(); i++) {
+
+		std::cout << commands[status][i] << std::endl;
+
+	}
+	std::cout << std::endl;
+
+}
+
+void Interface::editInfo() {
+
+	while (true) {
+
+		std::cout << currentUser << std::endl;
+		std::cout << std::endl;
+		std::cout << "Какую информацию вы бы хотели изменить?" << std::endl;
+		std::cout << "введите одно из следующих: Пароль, Время, Навыки, Предметные области" << std::endl;
+		std::cout << "Выйти - back";
+		fflush(stdin);
+		std::getline(std::cin, input);
+		if (input == "back")
+			break;
+		/*else if (input == "Имя"){  ВНИМАНИЕ! ИЗМЕНЕНИЕ ИМЕНИ НЕ ВЛИЯЕТ НА DATABASE!
+
+			fflush(stdin);
+			std::cout << "Введите имя: ";
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			if (input == "back")
+				break;
+			currentUser->changeInfo(1, input);
+			std::cout << "Имя успешно изменено." << std::endl;
+
+		}*/
+		else if (input == "Пароль") {
+
+			fflush(stdin);
+			std::cout << "Введите текущий пароль: ";
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			if (input == "back")
+				break;
+			if (currentUser->checkPassword(input)) {
+
+				fflush(stdin);
+				std::cout << "Введите новый пароль: ";
+				std::getline(std::cin, input);
+				std::cout << std::endl;
+				if (input == "back")
+					break;
+				currentUser->changeInfo(2, input);
+				std::cout << "Пароль успешно изменен." << std::endl;
+			}
+			else {
+
+				std::cout << "Введен неверный текущий пароль. Попробуйте еще раз." << std::endl;
+
+			}
+			
+		}
+		else if (input == "Время") {
+
+			fflush(stdin);
+			std::cout << "Введите число, на которое нужно увеличить Ваше текущее свободное время. " << std::endl;
+			std::cout << "(если время нужно уменьшить, то введите отрицательное число)" << std::endl;
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			currentUser->changeInfo(3, input);
+			std::cout << "Время успешно изменено." << std::endl;
+
+		}
+		else if (input == "Навыки") {
+
+			fflush(stdin);
+			std::cout << "Внимание! Список Ваших навыков будет удален, чтобы вы ввели новые. " << std::endl;
+			std::cout << "Чтобы продолжить, нажмите Enter. Чтобы вернуться, введите back." << std::endl;
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			if (input == "back")
+				break;
+			else {
+				std::cout << "Введите Ваши навыки через запятую: ";
+				fflush(stdin);
+				std::getline(std::cin, input);
+				if (input == "back")
+					break;
+				std::cout << std::endl;
+				currentUser->changeInfo(4, input);
+				std::cout << "Навыки успешно изменены." << std::endl;
+			}
+		}
+		else if (input == "Предметные области") {
+
+			fflush(stdin);
+			std::cout << "Внимание! Список Ваших предметных областей будет удален, чтобы вы ввели новые. " << std::endl;
+			std::cout << "Чтобы продолжить, нажмите Enter. Чтобы вернуться, введите back." << std::endl;
+			std::getline(std::cin, input);
+			std::cout << std::endl;
+			if (input == "back")
+				break;
+			else {
+				std::cout << "Введите Ваши предметные области через запятую: ";
+				fflush(stdin);
+				std::getline(std::cin, input);
+				if (input == "back")
+					break;
+				std::cout << std::endl;
+				currentUser->changeInfo(5, input);
+				std::cout << "Навыки успешно изменены." << std::endl;
+			}
+
+		}
+
+	}
+	
+}
+
+void Interface::displayNotification(Notification notification) {
+
+	std::cout << " Тип: ";
+	switch (notification.type)
+	{
+	case message:
+		std::cout << "Сообщение";
+		break;
+	case invitation:
+		std::cout << "Приглашение";
+		break;
+	case rating:
+		std::cout << "Оценка";
+		break;
+	case notify:
+		std::cout << "Запрос";
+		break;
+	default:
+		break;
+	}
+	std::cout << ",  Отправитель: " << notification.sender;
+	std::cout << ",  Проект: " << notification.project;
+	std::cout << std::endl;
+
+}
+
+void Interface::checkNotifications() {
+
+	std::vector<Notification> notifications = currentUser->extractNotifications();
+	while (true) {
+
+		std::cout << "Новые уведомления:" << std::endl;
+		for (int i = 0; i < notifications.size(); i++) {
+
+			std::cout << i + 1 << ")";
+			displayNotification(notifications[i]);
+
+		}
+		std::cout << std::endl;
+		std::cout << "Введите номер уведомления чтобы показать подробности" << std::endl;
+		std::cout << "Выйти - back" << std::endl;
+		fflush(stdin);
+		std::getline(std::cin, input);
+		if (input == "back")
+			break;
+		std::cout << std::endl;
+		int number = stoi(input) - 1;
+		displayNotification(notifications[number]);
+		std::cout << "Текст:" << std::endl;
+		std::cout << notifications[number].text << std::endl;
+		switch (notifications[number].type)
+				{
+				case message:
+					std::cout << "Введите \"Удалить\" для удаления уведомления или \"Оставить\", чтобы вернуться";
+					if (input == "Удалить"){
+			
+						notifications.erase(notifications.begin() + number);
+						break;
+			
+					}
+					else
+						break;
+			
+				case invitation:
+					std::cout << "Введите \"Принять\" для записи в проект, \"Отказаться\" чтобы удалить уведомление или \"Оставить\", чтобы вернуться";
+					if (input == "Принять") {
+						
+						database->getProject(notifications[number].project)->addParticipant(currentUser);
+						notifications.erase(notifications.begin() + number);
+						break;
+			
+					}
+					else if (input == "Отказаться"){
+			
+						notifications.erase(notifications.begin() + number);
+						break;
+			
+					}
+					else
+						break;
+			
+				case rating:
+					std::cout << "Хотите ли принять участие в оценке участников проекта?" << std::endl;
+					std::cout << "Введите \"Да\", чтобы продолжить, \"Нет\" чтобы удалить уведомление или \"Оставить\", чтобы вернуться" << std::endl;
+					if (input == "Да") {
+
+						Project* project = database->getProject(notifications[number].project);
+						std::map<std::string, User*> participants = project->getParticipants();
+						for (const std::pair<std::string, User*>& p : participants) {
+
+							if (p.second == currentUser) {
+
+								delete p.second;
+								continue;
+
+							}
+							else {
+
+								std::cout << "Какую оценку Вы хотите дать участнику " << p.first << "?" << std::endl;
+								std::cout << "Введите оценку от 1 до 10: ";
+								do {
+									fflush(stdin);
+									std::getline(std::cin, input);
+									std::cout << std::endl;
+									int rate = stoi(input); // #exception
+									if (rate > 10 || rate < 1) {
+										std::cout << "Введена неправильная оценка, попробуйте еще раз: ";
+									}
+									else {
+
+										break;
+
+									}
+								} while (true);
+								
+							}
+							delete p.second;
+
+						}
+						delete project;
+
+					}
+					else if (input == "Нет") {
+			
+						notifications.erase(notifications.begin() + number);
+						break;
+			
+					}
+					else
+						break;
+
+				case notify:
+
+					std::cout << "Введите \"Принять\" для записи в проект, \"Отказать\" чтобы удалить уведомление и послать отказ или \"Оставить\", чтобы вернуться";
+					if (input == "Принять") {
+						
+						std::cout << "Напишите текст сообщения о принятии (или оставьте пустым):" << std::endl;
+						fflush(stdin);
+						std::getline(std::cin, input);
+						if (input == "back")
+							break;
+						std::cout << std::endl;
+						Notification tempn = Notification(message, "Вы приняты: " + input, currentUser->getName(), notifications[number].project);
+						database->getUser(notifications[number].sender)->addNewNotification(tempn);
+						database->getProject(notifications[number].project)->addParticipant(database->getUser(notifications[number].sender));
+						notifications.erase(notifications.begin() + number);
+						break;
+
+					}
+					else if (input == "Отказать") {
+						std::cout << "Напишите текст отказа (или оставьте пустым):" << std::endl;
+						fflush(stdin);
+						std::getline(std::cin, input);
+						if (input == "back")
+							break;
+						std::cout << std::endl;
+						Notification tempn = Notification(message, "Отказ: " + input, currentUser->getName(), notifications[number].project);
+						database->getUser(notifications[number].sender)->addNewNotification(tempn);
+						notifications.erase(notifications.begin() + number);
+						break;
+
+					}
+					else
+						break;
+			
+				default:
+			
+					break;
+				}
+	}
+	currentUser->returnNotifications(notifications);
+	
 }
 
 void Interface::createProject()
