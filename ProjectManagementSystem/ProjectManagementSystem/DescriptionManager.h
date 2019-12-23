@@ -22,7 +22,7 @@ public:
 	void setTasks(std::string t);
 	void setSubjectField(std::string sf);
 	void setClient(std::string c);
-	void addPrerequisites(std::string pr);
+	void setPrerequisites(std::string pr);
 	std::string getName();
 	std::string getObjective();
 	std::string getTasks();

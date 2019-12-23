@@ -17,6 +17,8 @@ private:
 	User* currentUser;
 	std::map<std::string, std::vector<std::string>> commands;
 	std::string status;
+	std::string input;
+	void editProject(std::string name);
 public:
 	Interface();
 	void createProject();
