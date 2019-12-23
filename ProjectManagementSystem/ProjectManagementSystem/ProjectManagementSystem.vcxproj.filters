@@ -50,7 +50,7 @@
     </ClCompile>
     <ClCompile Include="NotificationStruct.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>
+    </ClCompile>r
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectClass.h">
