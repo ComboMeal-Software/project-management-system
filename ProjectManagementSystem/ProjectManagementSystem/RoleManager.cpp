@@ -41,3 +41,14 @@ void RoleManager::removeParticipant(std::string name)
 		else
 			participants.erase(name);
 }
+
+RoleManager::~RoleManager()
+{
+	delete initiator;
+	delete manager;
+	for (std::map<std::string, User*>::iterator itr = participants.begin(); itr != participants.end(); itr++)
+	{
+		delete (itr->second);
+	}
+	participants.clear();
+}
