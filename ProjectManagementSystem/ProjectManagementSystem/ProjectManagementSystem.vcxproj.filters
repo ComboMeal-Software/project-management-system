@@ -45,16 +45,16 @@
     <ClCompile Include="Database.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interface.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="NotificationStruct.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interface.h">
+    <ClCompile Include="NotificationManager.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InterfaceManager.h">
       <Filter>Header Files</Filter>
     </ClCompile>
-    <ClCompile Include="NotificationManager.cpp">
+    <ClCompile Include="InterfaceManager.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>

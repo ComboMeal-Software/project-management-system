@@ -1,9 +1,10 @@
 #include <iostream>
 #include "Database.h"
-#include "Interface.h"
+#include "InterfaceManager.h"
 
 int main()
 {
-	Interface IF;
+	setlocale(LC_ALL, "Russian");
+	InterfaceManager IF;
 	IF.init();
 }

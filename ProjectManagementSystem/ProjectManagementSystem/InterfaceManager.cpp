@@ -1,11 +1,11 @@
-﻿#include "Interface.h"
+﻿#include "InterfaceManager.h"
 
 #include "UserClass.h"
 #include "ProjectClass.h"
 #include "Database.h"
 #include "NotificationStruct.h"
 
-Interface::Interface()
+InterfaceManager::InterfaceManager()
 {
 	database = new Database();
 	currentUser = NULL;
@@ -15,7 +15,7 @@ Interface::Interface()
 	};
 }
 
-void Interface::init() {
+void InterfaceManager::init() {
 
 	welcome();
 	do {
@@ -50,7 +50,7 @@ void Interface::init() {
 	} while (true);
 }
 
-void Interface::welcome() { // Welocome message.
+void InterfaceManager::welcome() { // Welocome message.
 
 
 	std::cout << std::endl;
@@ -59,7 +59,7 @@ void Interface::welcome() { // Welocome message.
 
 }
 
-void Interface::registerUser(std::string name, std::string password) {
+void InterfaceManager::registerUser(std::string name, std::string password) {
 
 	if (database->checkUser(name)) {
 		fflush(stdin);
@@ -98,7 +98,7 @@ void Interface::registerUser(std::string name, std::string password) {
 	
 }
 
-void Interface::login(std::string name, std::string password) {
+void InterfaceManager::login(std::string name, std::string password) {
 
 	User* user = database->getUser(name);
 	if (user->checkPassword(password)) {
@@ -150,7 +150,7 @@ void Interface::login(std::string name, std::string password) {
 	}
 }
 
-void Interface::logout() {
+void InterfaceManager::logout() {
 
 	currentUser = NULL;
 	status = "start";
@@ -158,7 +158,7 @@ void Interface::logout() {
 
 }
 
-void Interface::help() {
+void InterfaceManager::help() {
 
 	for (int i = 0; i < commands[status].size(); i++) {
 
@@ -169,7 +169,7 @@ void Interface::help() {
 
 }
 
-void Interface::editInfo() {
+void InterfaceManager::editInfo() {
 
 	while (true) {
 
@@ -277,7 +277,7 @@ void Interface::editInfo() {
 	
 }
 
-void Interface::displayNotification(Notification notification) {
+void InterfaceManager::displayNotification(Notification notification) {
 
 	std::cout << " Тип: ";
 	switch (notification.type)
@@ -303,7 +303,7 @@ void Interface::displayNotification(Notification notification) {
 
 }
 
-void Interface::checkNotifications() {
+void InterfaceManager::checkNotifications() {
 
 	std::vector<Notification> notifications = currentUser->extractNotifications();
 	while (true) {
@@ -369,9 +369,7 @@ void Interface::checkNotifications() {
 
 							if (p.second == currentUser) {
 
-								delete p.second;
 								continue;
-
 							}
 							else {
 
@@ -393,11 +391,9 @@ void Interface::checkNotifications() {
 								} while (true);
 								
 							}
-							delete p.second;
 
 						}
-						delete project;
-
+						participants.clear();
 					}
 					else if (input == "Нет") {
 			
@@ -448,10 +444,9 @@ void Interface::checkNotifications() {
 				}
 	}
 	currentUser->returnNotifications(notifications);
-	
 }
 
-void Interface::createProject()
+void InterfaceManager::createProject()
 {
 	std::string name;
 	std::string objective;
@@ -502,7 +497,7 @@ void Interface::createProject()
 	return;
 }
 
-void Interface::findProjects()
+void InterfaceManager::findProjects()
 {
 	fflush(stdin);
 	std::cout << "Выйти - back";
@@ -549,18 +544,18 @@ void Interface::findProjects()
 	return;
 }
 
-void Interface::displayProjects()
+void InterfaceManager::displayProjects()
 {
 	std::string name;
 	std::cout << "Выйти - back";
-	std::map<std::string, Project*>* temp = &(currentUser->getCurrentProjects());
+	std::map<std::string, Project*> projects = currentUser->getCurrentProjects();
 	std::cout << "Вы состоите в следующих проектах: " << std::endl;
-	if (temp->size() == 0)
+	if (projects.size() == 0)
 	{
 		std::cout << "Вы не состоите ни в одном проекте." << std::endl;
 		return;
 	}
-	for (const std::pair<std::string, Project*>& p : temp->begin)
+	for (const std::pair<std::string, Project*> p : projects)
 	{
 		std::cout << p.first << " " << p.second->getName();
 	}
@@ -573,7 +568,7 @@ void Interface::displayProjects()
 		{
 			std::cin >> name;
 			fflush(stdin);
-			if (currentUser->getName() == temp->operator[](name)->getInitiator()->getName() || currentUser->getName() == temp->operator[](name)->getManager()->getName())
+			if (currentUser->getName() == projects[name]->getInitiator()->getName() || currentUser->getName() == projects[name]->getManager()->getName())
 				editProject(name);
 			else
 				std::cout << "Вы не обладаете достаточными правами." << std::endl;
@@ -583,18 +578,14 @@ void Interface::displayProjects()
 				break;
 			else
 			{
-				std::cout << temp->operator[](name);
+				std::cout << projects[name];
 			}
 	}
-	for (std::map<std::string, Project*>::iterator itr = temp->begin(); itr != temp->end(); itr++)
-	{
-		delete (itr->second);
-	}
-	temp->clear();
+	projects.clear();
 	return;
 }
 
-void Interface::editProject(std::string name)
+void InterfaceManager::editProject(std::string name)
 {
 	Project* project = database->getProject(name);
 	while (true)
@@ -673,7 +664,7 @@ void Interface::editProject(std::string name)
 	return;
 }
 
-Interface::~Interface()
+InterfaceManager::~InterfaceManager()
 {
 	for (std::map<std::string, std::vector<std::string>>::iterator itr = commands.begin(); itr != commands.end(); itr++)
 	{

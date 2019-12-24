@@ -13,7 +13,7 @@ void RoleManager::setManager(User* mngr)
 
 void RoleManager::addParticipant(User* part)
 {
-	participants.insert({ part->getName, part });
+	participants.insert({part->getName(), part});
 }
 
 User* RoleManager::getInitiator()

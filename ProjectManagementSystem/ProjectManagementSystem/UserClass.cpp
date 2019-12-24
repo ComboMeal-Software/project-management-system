@@ -1,4 +1,4 @@
-#include "UserClass.h"
+ï»¿#include "UserClass.h"
 #include "ProjectClass.h"
 #include "UserInfoManager.h"
 #include "RatingManager.h"
@@ -48,58 +48,49 @@ void User::changeInfo(int i, std::string input) {
 
 }
 
-std::string User::getName() {
-
-	infoManager->getName();
-
+std::string User::getName()
+{
+	return infoManager->getName();
 }
 
 int User::getFreetime() {
-
-	infoManager->getFreetime();
-  
+	return infoManager->getFreetime();
 }
 
 float User::getRating() {
 
-	ratingManager->getRating();
+	return ratingManager->getRating();
 
 }
 
 std::map<std::string, Project*> User::getCurrentProjects() {
 
-	infoManager->getCurrentProjects();
-
+	return infoManager->getCurrentProjects();
 }
 
 std::map<std::string, Project*> User::getFinishedProjects() {
 
-	infoManager->getFinishedProjects();
-
+	return infoManager->getFinishedProjects();
 }
 
 std::vector<std::string> User::getPrerequisites() {
 
-	infoManager->getPrerequisites();
-
+	return infoManager->getPrerequisites();
 }
 
 std::vector<std::string> User::getStudyFields() {
 
-	infoManager->getStudyFields();
-
+	return infoManager->getStudyFields();
 }
 
 bool User::checkPassword(std::string pass) {
 
-	infoManager->checkPassword(pass);
-
+	return infoManager->checkPassword(pass);
 }
 
 void User::collectRating(float newRating) {
 
 	ratingManager->collectRating(newRating);
-
 }
 
 void User::deleteProject(std::string name) {
@@ -153,11 +144,11 @@ User::~User() {
 
 std::ostream& operator<<(std::ostream& os, const User& user) {
 
-	os << "Ïîëüçîâàòåëü " << user.infoManager->getName() << std::endl;
-	os << "Ðåéòèíã: " << user.ratingManager->getRating() << std::endl;
-	os << "Òåêóùèå ïðîåêòû: " << user.infoManager->getCurrentProjects().size() << std::endl;
-	os << "Çàêîí÷åííûå ïðîåêòû: " << user.infoManager->getFinishedProjects().size() << std::endl;
-	os << "Íàâûêè: ";
+	os << "ÐŸÐ¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»ÑŒ " << user.infoManager->getName() << std::endl;
+	os << "Ð ÐµÐ¹Ñ‚Ð¸Ð½Ð³: " << user.ratingManager->getRating() << std::endl;
+	os << "Ð¢ÐµÐºÑƒÑ‰Ð¸Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ñ‹: " << user.infoManager->getCurrentProjects().size() << std::endl;
+	os << "Ð—Ð°ÐºÐ¾Ð½Ñ‡ÐµÐ½Ð½Ñ‹Ðµ Ð¿Ñ€Ð¾ÐµÐºÑ‚Ñ‹: " << user.infoManager->getFinishedProjects().size() << std::endl;
+	os << "ÐÐ°Ð²Ñ‹ÐºÐ¸: ";
 	std::vector<std::string> temp = user.infoManager->getPrerequisites();
 	for (int i = 0; i < temp.size() - 1; i++) {
 		os << temp[i];
@@ -165,7 +156,7 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 	}
 	os << temp[temp.size()-1];
 	os << std::endl;
-	os << "Ïðåäïî÷èòàåìûå ïðåäìåòíûå îáëàñòè: ";
+	os << "ÐŸÑ€ÐµÐ´Ð¿Ð¾Ñ‡Ð¸Ñ‚Ð°ÐµÐ¼Ñ‹Ðµ Ð¿Ñ€ÐµÐ´Ð¼ÐµÑ‚Ð½Ñ‹Ðµ Ð¾Ð±Ð»Ð°ÑÑ‚Ð¸: ";
 	temp = user.infoManager->getStudyFields();
 	for (int i = 0; i < temp.size() - 1; i++) {
 		os << temp[i];
@@ -173,6 +164,6 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 	}
 	os << temp[temp.size()];
 	os << std::endl;
-	os << "Free time: " << user.infoManager->getFreetime() << std::endl;
-
+	os << "Ð¡Ð²Ð¾Ð±Ð¾Ð´Ð½Ð¾Ðµ Ð²Ñ€ÐµÐ¼Ñ: " << user.infoManager->getFreetime() << std::endl;
+	return os;
 }

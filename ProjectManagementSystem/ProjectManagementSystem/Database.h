@@ -29,24 +29,7 @@ public:
 	void deleteUser(std::string userName);
 	void deleteProject(std::string projectName);
 	void finishProject(std::string projectName);
-	~Database()
-	{
-		for (std::map<std::string, User*>::iterator itr = users.begin(); itr != users.end(); itr++)
-		{
-			delete (itr->second);
-		}
-		users.clear();
-		for (std::map<std::string, Project*>::iterator itr = projects.begin(); itr != projects.end(); itr++)
-		{
-			delete (itr->second);
-		}
-		projects.clear();
-		for (std::map<std::string, Project*>::iterator itr = finishedProjects.begin(); itr != finishedProjects.end(); itr++)
-		{
-			delete (itr->second);
-		}
-		finishedProjects.clear();
-	};
+	~Database();
 };
 
 #endif

@@ -150,7 +150,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DeadlineManager.cpp" />
     <ClCompile Include="DescriptionManager.cpp" />
-    <ClCompile Include="Interface.cpp" />
+    <ClCompile Include="InterfaceManager.cpp" />
     <ClCompile Include="NotificationManager.cpp" />
     <ClCompile Include="NotificationStruct.cpp" />
     <ClCompile Include="ProjectClass.cpp" />
@@ -167,7 +167,7 @@
     <ClInclude Include="DescriptionManager.h" />
     <ClInclude Include="NotificationManager.h" />
     <ClInclude Include="NotificationStruct.h" />
-    <ClCompile Include="Interface.h" />
+    <ClCompile Include="InterfaceManager.h" />
     <ClInclude Include="ProjectClass.h" />
     <ClInclude Include="RatingManager.h" />
     <ClInclude Include="UserClass.h" />

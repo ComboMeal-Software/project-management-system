@@ -34,9 +34,9 @@ public:
 	std::map<std::string, User*> getParticipants();
 	std::string getSubjectField();
 	std::string getName();
-	std::string getDeadlineDay();
-	std::string getDeadlineMonth();
-	std::string getDeadlineYear();
+	unsigned char getDeadlineDay();
+	unsigned char getDeadlineMonth();
+	unsigned short getDeadlineYear();
 	std::string getStatus();
 	void setSubjectField(std::string subjectField);
 	void setDeadline(std::string dl);
@@ -47,7 +47,7 @@ public:
 	void setClient(std::string client);
 	std::vector<std::string> getPrerequisites();
 	friend std::ostream& operator<<(std::ostream& os, const Project& pr);
-	~Project() {};
+	~Project();
 };
 
 #endif

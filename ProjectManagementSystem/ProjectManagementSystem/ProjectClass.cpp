@@ -27,52 +27,52 @@ void Project::removeParticipant(std::string name)
 
 User* Project::getInitiator()
 {
-	roles->getInitiator();
+	return roles->getInitiator();
 }
 
 User* Project::getManager()
 {
-	roles->getManager();
+	return roles->getManager();
 }
 
 std::map<std::string, User*> Project::getParticipants()
 {
-	roles->getParticipants();
+	return roles->getParticipants();
 }
 
 std::string Project::getSubjectField()
 {
-	description->getSubjectField();
+	return description->getSubjectField();
 }
 
 std::string Project::getName()
 {
-	description->getName();
+	return description->getName();
 }
 
-std::string Project::getDeadlineDay()
+unsigned char Project::getDeadlineDay()
 {
-	deadline->getDeadlineDay();
+	return deadline->getDeadlineDay();
 }
 
-std::string Project::getDeadlineMonth()
+unsigned char Project::getDeadlineMonth()
 {
-	deadline->getDeadlineMonth();
+	return deadline->getDeadlineMonth();
 }
 
-std::string Project::getDeadlineYear()
+unsigned short Project::getDeadlineYear()
 {
-	deadline->getDeadlineYear();
+	return deadline->getDeadlineYear();
 }
 
 std::vector<std::string> Project::getPrerequisites()
 {
-	description->getPrerequisites();
+	return description->getPrerequisites();
 }
 
 std::string Project::getStatus()
 {
-	statusIndicator->getStatus();
+	return statusIndicator->getStatus();
 }
 
 void Project::setClient(std::string client)
@@ -136,6 +136,7 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 		os << p.first << ", ";
 	}
 	os << std::endl;
+	return os;
 }
 
 Project::Project(User* initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string dl, std::string prerequisites)

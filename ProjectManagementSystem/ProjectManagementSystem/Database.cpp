@@ -86,6 +86,7 @@ std::vector<Project*> Database::findProjects(std::vector<std::string> prer)
 			found.push_back(p.second);
 		}
 	}
+	return found;
 }
 
 std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
@@ -116,5 +117,27 @@ std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
 		{
 			found.push_back(p.second);
 		}
+	}
+	return found;
+}
+
+Database::~Database()
+{
+	{
+		for (std::map<std::string, User*>::iterator itr = users.begin(); itr != users.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		users.clear();
+		for (std::map<std::string, Project*>::iterator itr = projects.begin(); itr != projects.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		projects.clear();
+		for (std::map<std::string, Project*>::iterator itr = finishedProjects.begin(); itr != finishedProjects.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		finishedProjects.clear();
 	}
 }

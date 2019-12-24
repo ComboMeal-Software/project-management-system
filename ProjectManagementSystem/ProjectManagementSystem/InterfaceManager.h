@@ -1,6 +1,6 @@
 #pragma once
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef InterfaceManager_H
+#define InterfaceManager_H
 
 #include <vector>
 #include <string>
@@ -11,7 +11,7 @@ class User;
 class Project;
 class Database;
 
-class Interface
+class InterfaceManager
 {
 private:
 	Database* database;
@@ -21,7 +21,7 @@ private:
 	std::string input;
 	void editProject(std::string name);
 public:
-	Interface();
+	InterfaceManager();
 	void init();
 	void welcome();
 	void registerUser(std::string name, std::string password);
@@ -34,7 +34,7 @@ public:
 	void createProject();
 	void findProjects();
 	void displayProjects();
-	~Interface();
+	~InterfaceManager();
 };
 
 #endif

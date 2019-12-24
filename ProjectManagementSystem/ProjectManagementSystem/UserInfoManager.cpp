@@ -116,16 +116,7 @@ void UserInfoManager::deleteProject(std::string name) {
 }
 UserInfoManager::~UserInfoManager()
 {
-	for (std::map<std::string, Project*>::iterator itr = currentProjects.begin(); itr != currentProjects.end(); itr++)
-	{
-		delete (itr->second);
-	}
 	currentProjects.clear();
-
-	for (std::map<std::string, Project*>::iterator itr = finishedProjects.begin(); itr != finishedProjects.end(); itr++)
-	{
-		delete (itr->second);
-	}
 	finishedProjects.clear();
 	prerequisites.clear();
 	StudyFields.clear();
