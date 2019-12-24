@@ -41,7 +41,7 @@ void DescriptionManager::setPrerequisites(std::string pr)
 	while (pr.find(",") != std::string::npos)
 	{
 		prerequisites.push_back(pr.substr(0,pr.find(",")));
-		pr.substr(pr.find(",") + 1);
+		pr = pr.substr(pr.find(",") + 2);
 	}
 	prerequisites.push_back(pr);
 }

@@ -14,6 +14,7 @@ InterfaceManager::InterfaceManager()
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
 		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", " help - просмотр доступных команд"}}
 	};
+	database->createUser("Thomas", "12345", 7, "c++, sex, turbo", "SEX, monster energy), realno flexim");
 }
 
 void InterfaceManager::init() {
@@ -70,7 +71,8 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 		std::cout << "Введите дополнительные данные. В дальнейшем информация может быть изменена." << std::endl;
 		std::cout << "Выйти - back" << std::endl;
 		std::cout << "Введите Ваши навыки через запятую: " << std::endl;
-		std::getline(std::cin, prer); 
+		fflush(stdin);
+		std::getline(std::cin, prer);
 		std::getline(std::cin, prer);
 		if (prer == "back")
 			return;
@@ -101,17 +103,15 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 
 void InterfaceManager::login(std::string name, std::string password) {
 
-	//User* user = database->getUser(name);
-	if (database->getUser(name)->checkPassword(password)) {
+	User* user = database->getUser(name);
+	if (user->checkPassword(password)) {
 
-		currentUser = database->getUser(name);
+		currentUser = user;
 		status = "logged_in";
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
 		std::cout << "Новых уведомлений: " << currentUser->checkNotifications() <<std::endl;
 		std::cout << "Для просмотра доступных команд используйте help." << std::endl;
 		std::cout << "Для выхода из системы используйте logout." << std::endl;
-		fflush(stdin);
-		std::getline(std::cin, input);
 		do {
 
 			fflush(stdin);
@@ -140,7 +140,7 @@ void InterfaceManager::login(std::string name, std::string password) {
 				checkNotifications();
 
 			else
-				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд." << std::endl;
+				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд.";
 
 		} while (true);
 		
@@ -462,6 +462,8 @@ void InterfaceManager::createProject()
 	std::cout << "Имя проекта: ";
 	std::getline(std::cin, name);
 	if (name == "back")
+		return;
+	if (!database->checkProject(name))
 		return;
 	std::cout << std::endl;
 	std::cout << "Цель проекта: ";
