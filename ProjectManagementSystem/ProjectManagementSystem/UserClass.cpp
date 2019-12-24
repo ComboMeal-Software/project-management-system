@@ -19,7 +19,7 @@ User::User(std::string n, std::string pass, int free_time, std::string prerequis
 }
 void User::changeInfo(int i, std::string input) {
 
-	int free_time = stoi(input);
+	int free_time;
 	switch (i)
 	{
 	case 1:
@@ -31,7 +31,7 @@ void User::changeInfo(int i, std::string input) {
 		break;
 
 	case 3:
-		
+		free_time = stoi(input);
 		infoManager->changeFreetime(free_time);
 		break;
 	
@@ -153,7 +153,8 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 	os << "Пользователь " << user.infoManager->getName() << std::endl;
 	if (user.ratingManager->getRating() == 0)
 		os << "Рейтинг: " << "не определен" << std::endl;
-	os << "Рейтинг: " << user.ratingManager->getRating() << std::endl;
+	else
+		os << "Рейтинг: " << user.ratingManager->getRating() << std::endl;
 	os << "Текущие проекты: " << user.infoManager->getCurrentProjects().size() << std::endl;
 	os << "Законченные проекты: " << user.infoManager->getFinishedProjects().size() << std::endl;
 	os << "Навыки: ";
