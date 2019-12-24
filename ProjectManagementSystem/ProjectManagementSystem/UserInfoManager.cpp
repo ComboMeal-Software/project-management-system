@@ -38,7 +38,7 @@ void UserInfoManager::addPrerequisites(std::string pr) { // checking right input
 void UserInfoManager::addStudyFields(std::string sf) { // checking right input? #exception
 
 	StudyFields.clear();
-	while (sf.find(",") != std::string::npos)
+	while (sf.find(",") != std::string::npos) // doesn't work
 	{
 		StudyFields.push_back(sf.substr(0, sf.find(",")));
 		sf.substr(sf.find(",") + 1);

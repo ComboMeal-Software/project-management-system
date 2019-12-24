@@ -69,7 +69,7 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
 		std::cout << "Введите дополнительные данные. В дальнейшем информация может быть изменена." << std::endl;
 		std::cout << "Выйти - back" << std::endl;
-		std::cout << "Введите Ваши навыки через запятую: ";
+		std::cout << "Введите Ваши навыки через запятую: " << std::endl;
 		std::getline(std::cin, prerequisites);
 		if (prerequisites == "back")
 			return;
