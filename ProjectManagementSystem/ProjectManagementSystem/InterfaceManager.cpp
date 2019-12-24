@@ -21,6 +21,7 @@ InterfaceManager::InterfaceManager()
 	database->createProject(currentUser, "Test", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "c++, programming");
 	database->getProject("Test")->addParticipant(currentUser);
 	currentUser->addProject(database->getProject("Test"));
+	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
 }
 
 void InterfaceManager::init() {
@@ -118,10 +119,10 @@ void InterfaceManager::login(std::string name, std::string password) {
 		status = "logged_in";
 		fflush(stdin);
 		std::getline(std::cin, input);
+		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
+		std::cout << "Новых уведомлений: " << currentUser->checkNotifications() << std::endl;
 		do {
 
-			std::cout << "Добро пожаловать, " << name << "!" << std::endl;
-			std::cout << "Новых уведомлений: " << currentUser->checkNotifications() << std::endl;
 			std::cout << "Для просмотра доступных команд используйте help." << std::endl;
 			std::cout << "Для выхода из системы используйте logout." << std::endl;
 			fflush(stdin);
@@ -354,8 +355,10 @@ void InterfaceManager::checkNotifications() {
 		switch (notifications[number].type)
 				{
 				case message:
-					std::cout << "Введите \"Удалить\" для удаления уведомления или \"Оставить\", чтобы вернуться";
-					if (input == "Удалить"){
+					std::cout << "Введите delete для удаления уведомления или leave, чтобы вернуться";
+					fflush(stdin);
+					std::getline(std::cin, input);
+					if (input == "delete"){
 			
 						notifications.erase(notifications.begin() + number);
 						break;
@@ -365,8 +368,10 @@ void InterfaceManager::checkNotifications() {
 						break;
 			
 				case invitation:
-					std::cout << "Введите \"Принять\" для записи в проект, \"Отказаться\" чтобы удалить уведомление или \"Оставить\", чтобы вернуться";
-					if (input == "Принять") {
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление или \"Оставить\", чтобы вернуться";
+					fflush(stdin);
+					std::getline(std::cin, input);
+					if (input == "accept") {
 						
 						database->getProject(notifications[number].project)->addParticipant(currentUser);
 						currentUser->addProject(database->getProject(notifications[number].project));
@@ -374,7 +379,7 @@ void InterfaceManager::checkNotifications() {
 						break;
 			
 					}
-					else if (input == "Отказаться"){
+					else if (input == "decline"){
 			
 						notifications.erase(notifications.begin() + number);
 						break;
@@ -385,8 +390,10 @@ void InterfaceManager::checkNotifications() {
 			
 				case rating:
 					std::cout << "Хотите ли принять участие в оценке участников проекта?" << std::endl;
-					std::cout << "Введите \"Да\", чтобы продолжить, \"Нет\" чтобы удалить уведомление или \"Оставить\", чтобы вернуться" << std::endl;
-					if (input == "Да") {
+					std::cout << "Введите yes, чтобы продолжить, no чтобы удалить уведомление или leave, чтобы вернуться" << std::endl;
+					fflush(stdin);
+					std::getline(std::cin, input);
+					if (input == "yes") {
 
 						Project* project = database->getProject(notifications[number].project);
 						std::map<std::string, User*> participants = project->getParticipants();
@@ -420,7 +427,7 @@ void InterfaceManager::checkNotifications() {
 						}
 						participants.clear();
 					}
-					else if (input == "Нет") {
+					else if (input == "no") {
 			
 						notifications.erase(notifications.begin() + number);
 						break;
@@ -431,8 +438,10 @@ void InterfaceManager::checkNotifications() {
 
 				case notify:
 
-					std::cout << "Введите \"Принять\" для записи в проект, \"Отказать\" чтобы удалить уведомление и послать отказ или \"Оставить\", чтобы вернуться";
-					if (input == "Принять") {
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление и послать отказ или leave, чтобы вернуться";
+					fflush(stdin);
+					std::getline(std::cin, input);
+					if (input == "accept") {
 						
 						std::cout << "Напишите текст сообщения о принятии (или оставьте пустым):" << std::endl;
 						fflush(stdin);
@@ -448,7 +457,7 @@ void InterfaceManager::checkNotifications() {
 						break;
 
 					}
-					else if (input == "Отказать") {
+					else if (input == "decline") {
 						std::cout << "Напишите текст отказа (или оставьте пустым):" << std::endl;
 						fflush(stdin);
 						std::getline(std::cin, input);
