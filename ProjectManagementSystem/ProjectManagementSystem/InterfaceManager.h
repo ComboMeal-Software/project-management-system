@@ -33,6 +33,7 @@ public:
 	void checkNotifications();
 	void createProject();
 	void findProjects();
+	void findParticipants(std::string name);
 	void displayProjects();
 	~InterfaceManager();
 };

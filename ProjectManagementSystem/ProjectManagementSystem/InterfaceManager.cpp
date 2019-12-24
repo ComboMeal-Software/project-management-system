@@ -430,6 +430,7 @@ void InterfaceManager::checkNotifications() {
 						Notification tempn = Notification(message, "Вы приняты: " + input, currentUser->getName(), notifications[number].project);
 						database->getUser(notifications[number].sender)->addNewNotification(tempn);
 						database->getProject(notifications[number].project)->addParticipant(database->getUser(notifications[number].sender));
+						database->getUser(notifications[number].sender)->addProject(database->getProject(notifications[number].project));
 						notifications.erase(notifications.begin() + number);
 						break;
 
@@ -509,6 +510,7 @@ void InterfaceManager::createProject()
 	database->createProject(currentUser, name, objective, tasks, subjectField, client, deadline, prerequisites);
 	std::cout << "Проект " << name << " создан успешно" << std::endl;
 	database->getProject(name)->addParticipant(currentUser);
+	currentUser->addProject(database->getProject(name));
 	return;
 }
 
@@ -554,14 +556,63 @@ void InterfaceManager::findProjects()
 				break;
 			else
 			{
-				std::cout << temp->operator[](std::stoi(input));
+				std::cout << *(temp->operator[](std::stoi(input)));
 			}
 	}
 	for (int i = 0; i < temp->size(); i++)
 	{
 		delete temp->operator[](i);
 	}
-	delete[] temp;
+	return;
+}
+
+void InterfaceManager::findParticipants(std::string name)
+{
+	fflush(stdin);
+	Project* tempPro = database->getProject(name);
+	std::cout << "Выйти - back";
+	std::vector<User*> temp = database->findParticipants(tempPro->getPrerequisites());
+	std::map<std::string, User*> tempPar = tempPro->getParticipants();
+	for (int i = 0; i < temp.size(); i++)
+	{
+		if (tempPar.count(temp[i]->getName()) == 1)
+			temp.erase(temp.begin() + i);
+	}
+	std::cout << "Подходящие вам пользователи:" << std::endl;
+	if (temp.size() == 0)
+	{
+		std::cout << "Подходящие проекты отсутсвуют" << std::endl;
+		return;
+	}
+	for (int i = 0; i < temp.size(); i++)
+	{
+		std::cout << i << " " << temp[i]->getName() << std::endl;
+	}
+	std::cout << std::endl;
+	std::cout << "Введите номер пользователя, чтобы показать подробную информацию." << std::endl;
+	std::cout << "invite [number] - отправить приглашение в проект";
+	while (true)
+	{
+		std::cin >> input;
+		if (input == "invite")
+		{
+			std::cin >> input;
+			fflush(stdin);
+			std::string message;
+			std::cout << "Введите ваше сообщение." << std::endl;
+			std::getline(std::cin, message);
+			Notification tempn = Notification(invitation, message, currentUser->getName(), name);
+			temp[std::stoi(input)]->addNewNotification(tempn);
+		}
+		else
+			if (input == "back")
+				break;
+			else
+			{
+				std::cout << *(temp[std::stoi(input)]);
+			}
+	}
+	temp.clear();
 	return;
 }
 
@@ -582,6 +633,7 @@ void InterfaceManager::displayProjects()
 	}
 	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
 	std::cout << "edit [name] - изменить информацию о проекте (только для инициаторов и менеджеров проекта)";
+	std::cout << "find_participants [name] - найти участников для проекта";
 	while (true)
 	{
 		std::cin >> input;
@@ -595,12 +647,17 @@ void InterfaceManager::displayProjects()
 				std::cout << "Вы не обладаете достаточными правами." << std::endl;
 		}
 		else
-			if (input == "back")
-				break;
-			else
+			if (input == "find_participants")
 			{
-				std::cout << *(projects[name]);
+				findParticipants(name);
 			}
+			else
+				if (input == "back")
+					break;
+				else
+				{
+					std::cout << *(projects[name]);
+				}
 	}
 	projects.clear();
 	return;
@@ -675,6 +732,7 @@ void InterfaceManager::editProject(std::string name)
 												std::cout << "Введите имя менеджера";
 												std::getline(std::cin, input);
 												project->setManager(database->getUser(input));
+												database->getUser(input)->addProject(project);
 											}
 											else
 												std::cout << "У вас недостаточно прав.";
