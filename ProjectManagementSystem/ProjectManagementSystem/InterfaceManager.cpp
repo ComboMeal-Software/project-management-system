@@ -9,6 +9,7 @@ InterfaceManager::InterfaceManager()
 {
 	database = new Database();
 	currentUser = NULL;
+	status = "start";
 	commands = {
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
 		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", " help - просмотр доступных команд"}}
@@ -20,7 +21,7 @@ void InterfaceManager::init() {
 	welcome();
 	do {
 		fflush(stdin);
-		std::getline(std::cin, input);
+		std::cin >> input;
 		std::cout << std::endl;
 		if (input == "exit")
 			break;
@@ -29,8 +30,8 @@ void InterfaceManager::init() {
 
 			std::string name;
 			std::string password;
-			std::getline(std::cin, name);
-			std::getline(std::cin, password);
+			std::cin >> name;
+			std::cin >> password;
 			registerUser(name, password);
 		}
 			
@@ -38,10 +39,9 @@ void InterfaceManager::init() {
 
 			std::string name;
 			std::string password;
-			std::getline(std::cin, name);
-			std::getline(std::cin, password);
+			std::cin >> name;
+			std::cin >> password;
 			login(name, password);
-
 		}
 			
 		if (input == "help")
@@ -104,10 +104,9 @@ void InterfaceManager::login(std::string name, std::string password) {
 	if (user->checkPassword(password)) {
 
 		currentUser = user;
-		delete user;
 		status = "logged_in";
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
-		std::cout << "Новых уведомлений: " << user->checkNotifications() <<std::endl;
+		std::cout << "Новых уведомлений: " << currentUser->checkNotifications() <<std::endl;
 		std::cout << "Для просмотра доступных команд используйте help." << std::endl;
 		std::cout << "Для выхода из системы используйте logout." << std::endl;
 		do {
@@ -666,9 +665,5 @@ void InterfaceManager::editProject(std::string name)
 
 InterfaceManager::~InterfaceManager()
 {
-	for (std::map<std::string, std::vector<std::string>>::iterator itr = commands.begin(); itr != commands.end(); itr++)
-	{
-		itr->second.clear();
-	}
-	commands.clear();
+
 }
