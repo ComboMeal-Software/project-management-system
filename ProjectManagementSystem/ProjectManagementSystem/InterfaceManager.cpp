@@ -547,22 +547,22 @@ void InterfaceManager::findProjects()
 {
 	fflush(stdin);
 	std::cout << "Выйти - back";
-	std::vector<Project*> *temp = &(database->findProjects(currentUser->getPrerequisites()));
-	std::map<std::string, Project*>* tempcu = &(currentUser->getCurrentProjects());
-	for (int i = 0; i < temp->size(); i++)
+	std::vector<Project*> temp = database->findProjects(currentUser->getPrerequisites());
+	std::map<std::string, Project*> tempcu = currentUser->getCurrentProjects();
+	for (int i = 0; i < temp.size(); i++)
 	{
-		if (tempcu->count(temp->operator[](i)->getName()) == 1)
-			temp->erase(temp->begin() + i);
+		if (tempcu.count(temp[i]->getName()) == 1)
+			temp.erase(temp.begin() + i);
 	}
 	std::cout << "Подходящие вам проекты:" << std::endl;
-	if (temp->size() == 0)
+	if (temp.size() == 0)
 	{
 		std::cout << "Подходящие проекты отсутсвуют" << std::endl;
 		return;
 	}
-	for (int i = 0; i < temp->size(); i++)
+	for (int i = 0; i < temp.size(); i++)
 	{
-		std::cout << i << " " << temp->operator[](i)->getName() << std::endl;
+		std::cout << i << " " << temp[i]->getName() << std::endl;
 	}
 	std::cout << std::endl;
 	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
@@ -577,21 +577,19 @@ void InterfaceManager::findProjects()
 			std::string message;
 			std::cout << "Введите ваше сообщение." << std::endl;
 			std::getline(std::cin, message);
-			Notification tempn = Notification(notify, message, currentUser->getName(), temp->operator[](std::stoi(input))->getName());
-			temp->operator[](std::stoi(input))->getInitiator()->addNewNotification(tempn);
+			Notification tempn = Notification(notify, message, currentUser->getName(), temp[std::stoi(input)]->getName());
+			temp[std::stoi(input)]->getInitiator()->addNewNotification(tempn);
 		}
 		else
 			if (input == "back")
 				break;
 			else
 			{
-				std::cout << *(temp->operator[](std::stoi(input)));
+				std::cout << *(temp[std::stoi(input)]);
 			}
 	}
-	for (int i = 0; i < temp->size(); i++)
-	{
-		delete temp->operator[](i);
-	}
+	temp.clear();
+	tempcu.clear();
 	return;
 }
 
@@ -652,6 +650,7 @@ void InterfaceManager::findParticipants(std::string name)
 			}
 	}
 	temp.clear();
+	tempPar.clear();
 	return;
 }
 
@@ -670,7 +669,7 @@ void InterfaceManager::displayProjects()
 	{
 		std::cout << p.first << " " << p.second->getObjective() << std::endl;
 	}
-	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
+	std::cout << "Введите имя проекта, чтобы показать подробную информацию." << std::endl;
 	std::cout << "edit [name] - изменить информацию о проекте (только для инициаторов и менеджеров проекта)" << std::endl;
 	std::cout << "find_participants [name] - найти участников для проекта" << std::endl;
 	while (true)
@@ -697,7 +696,8 @@ void InterfaceManager::displayProjects()
 					break;
 				else
 				{
-					std::cout << *(projects[name]);
+					if (projects.count(input) != 0)
+						std::cout << *(projects[input]);
 				}
 	}
 	projects.clear();
@@ -723,61 +723,71 @@ void InterfaceManager::editProject(std::string name)
 				std::cout << "Введите статус (Initialization, Recruitment, Active, Closed)" << std::endl;
 				std::getline(std::cin, input);
 				if ((input != "Initialization") && (input != "Recruitment") && (input != "Active") && (input != "Closed"))
-					std::cout << "Введен неверный статус";
+					std::cout << "Введен неверный статус." << std::endl;
 				else
+				{
 					project->setStatus(input);
+					std::cout << "Статус успешно изменен!" << std::endl;
+				}
 			}
 			else
 				if (input == "Цель")
 				{
-					std::cout << "Введите цель ";
+					std::cout << "Введите цель" << std::endl;
 					std::getline(std::cin, input);
 					project->setObjective(input);
+					std::cout << "Цель успешно изменена!" << std::endl;
 				}
 				else
 					if (input == "Задачи")
 					{
-						std::cout << "Введите задачи ";
+						std::cout << "Введите задачи" << std::endl;
 						std::getline(std::cin, input);
 						project->setTasks(input);
+						std::cout << "Задачи успешно изменены!" << std::endl;
 					}
 					else
-						if (input == "Предметная область ")
+						if (input == "Предметная область")
 						{
-							std::cout << "Введите предметную область ";
+							std::cout << "Введите предметную область " << std::endl;
 							std::getline(std::cin, input);
 							project->setSubjectField(input);
+							std::cout << "Предметная область успешно изменена!" << std::endl;
 						}
 						else
 							if (input == "Заказчик")
 							{
-								std::cout << "Введите заказчика ";
+								std::cout << "Введите заказчика" << std::endl;
 								std::getline(std::cin, input);
 								project->setClient(input);
+								std::cout << "Заказчик успешно изменен!" << std::endl;
 							}
 							else
 								if (input == "Дедлайн")
 								{
-									std::cout << "Введите дедлайн (дд/мм/гггг) ";
+									std::cout << "Введите дедлайн (дд/мм/гггг)" << std::endl;
 									std::getline(std::cin, input);
 									project->setDeadline(input);
+									std::cout << "Дедлайн успешно изменен!" << std::endl;
 								}
 								else
 									if (input == "Необходимые навыки")
 									{
-										std::cout << "Введите необходимые навыки";
+										std::cout << "Введите необходимые навыки" << std::endl;
 										std::getline(std::cin, input);
 										project->setPrerequisites(input);
+										std::cout << "Навыки успешно изменены!" << std::endl;
 									}
 									else
 										if (input == "Менеджер")
 										{
 											if (project->getInitiator()->getName() == currentUser->getName())
 											{
-												std::cout << "Введите имя менеджера";
+												std::cout << "Введите имя менеджера" << std::endl;
 												std::getline(std::cin, input);
 												project->setManager(database->getUser(input));
 												database->getUser(input)->addProject(project);
+												std::cout << "Менеджер успешно изменен!" << std::endl;
 											}
 											else
 												std::cout << "У вас недостаточно прав." << std::endl;
@@ -815,7 +825,6 @@ void InterfaceManager::editProject(std::string name)
 											}
 		}
 	}
-	delete project;
 	return;
 }
 

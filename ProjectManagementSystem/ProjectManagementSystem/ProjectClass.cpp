@@ -134,7 +134,8 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 	os << "Дедлайн - " << pr.deadline->getDeadline() << std::endl;
 	os << "Люди:" << std::endl;
 	os << "Инициатор - " << pr.roles->getInitiator()->getName() << std::endl;
-	os << "Менеджер - " << pr.roles->getManager()->getName() << std::endl;
+	if(pr.roles->getManager() != NULL)
+		os << "Менеджер - " << pr.roles->getManager()->getName() << std::endl;
 	os << "Участники: ";
 	std::map<std::string, User*> mtemp = pr.roles->getParticipants();
 	for (const std::pair<std::string, User*>& p : mtemp)
