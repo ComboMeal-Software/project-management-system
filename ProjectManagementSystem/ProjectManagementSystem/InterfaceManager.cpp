@@ -499,6 +499,7 @@ void InterfaceManager::createProject()
 	std::cout << std::endl;
 	database->createProject(currentUser, name, objective, tasks, subjectField, client, deadline, prerequisites);
 	std::cout << "Проект " << name << " создан успешно" << std::endl;
+	database->getProject(name)->addParticipant(currentUser);
 	return;
 }
 
