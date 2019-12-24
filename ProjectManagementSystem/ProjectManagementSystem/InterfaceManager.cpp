@@ -29,7 +29,7 @@ void InterfaceManager::init() {
 		if (input == "exit")
 			break;
 
-		if (input == "register") {
+		else if (input == "register") {
 
 			std::string name;
 			std::string password;
@@ -38,7 +38,7 @@ void InterfaceManager::init() {
 			registerUser(name, password);
 		}
 			
-		if (input == "login") {
+		else if (input == "login") {
 
 			std::string name;
 			std::string password;
@@ -47,9 +47,12 @@ void InterfaceManager::init() {
 			login(name, password);
 		}
 			
-		if (input == "help")
+		else if (input == "help")
 			help();
-
+		else
+		{
+			std::cout << "Введена некорректная команда. Попробуйте еще раз." << std::endl;
+		}
 	} while (true);
 }
 
@@ -109,14 +112,14 @@ void InterfaceManager::login(std::string name, std::string password) {
 
 		currentUser = database->getUser(name);
 		status = "logged_in";
-		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
-		std::cout << "Новых уведомлений: " << currentUser->checkNotifications() <<std::endl;
-		std::cout << "Для просмотра доступных команд используйте help." << std::endl;
-		std::cout << "Для выхода из системы используйте logout." << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
 		do {
 
+			std::cout << "Добро пожаловать, " << name << "!" << std::endl;
+			std::cout << "Новых уведомлений: " << currentUser->checkNotifications() << std::endl;
+			std::cout << "Для просмотра доступных команд используйте help." << std::endl;
+			std::cout << "Для выхода из системы используйте logout." << std::endl;
 			fflush(stdin);
 			std::getline(std::cin, input);
 			std::cout << std::endl;
@@ -188,8 +191,8 @@ void InterfaceManager::editInfo() {
 		std::cout << *currentUser << std::endl;
 		std::cout << std::endl;
 		std::cout << "Какую информацию вы бы хотели изменить?" << std::endl;
-		std::cout << "введите одно из следующих: Пароль, Время, Навыки, Предметные области" << std::endl;
-		std::cout << "Выйти - back";
+		std::cout << "введите одно из следующих: password, time, skills, interests" << std::endl;
+		std::cout << "Выйти - back" << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
 		if (input == "back")
@@ -206,7 +209,7 @@ void InterfaceManager::editInfo() {
 			std::cout << "Имя успешно изменено." << std::endl;
 
 		}*/
-		else if (input == "Пароль") {
+		else if (input == "password") {
 
 			fflush(stdin);
 			std::cout << "Введите текущий пароль: ";
@@ -232,7 +235,7 @@ void InterfaceManager::editInfo() {
 			}
 			
 		}
-		else if (input == "Время") {
+		else if (input == "time") {
 
 			fflush(stdin);
 			std::cout << "Введите число, на которое нужно увеличить Ваше текущее свободное время. " << std::endl;
@@ -243,7 +246,7 @@ void InterfaceManager::editInfo() {
 			std::cout << "Время успешно изменено." << std::endl;
 
 		}
-		else if (input == "Навыки") {
+		else if (input == "skills") {
 
 			fflush(stdin);
 			std::cout << "Внимание! Список Ваших навыков будет удален, чтобы вы ввели новые. " << std::endl;
@@ -263,7 +266,7 @@ void InterfaceManager::editInfo() {
 				std::cout << "Навыки успешно изменены." << std::endl;
 			}
 		}
-		else if (input == "Предметные области") {
+		else if (input == "interests") {
 
 			fflush(stdin);
 			std::cout << "Внимание! Список Ваших предметных областей будет удален, чтобы вы ввели новые. " << std::endl;
@@ -283,6 +286,10 @@ void InterfaceManager::editInfo() {
 				std::cout << "Навыки успешно изменены." << std::endl;
 			}
 
+		}
+		else
+		{
+			std::cout << "Введена некорректная команда. Попробуйте еще раз." << std::endl;
 		}
 
 	}
@@ -357,6 +364,7 @@ void InterfaceManager::checkNotifications() {
 					if (input == "Принять") {
 						
 						database->getProject(notifications[number].project)->addParticipant(currentUser);
+						currentUser->addProject(database->getProject(notifications[number].project));
 						notifications.erase(notifications.begin() + number);
 						break;
 			
