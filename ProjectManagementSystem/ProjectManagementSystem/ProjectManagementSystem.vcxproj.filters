@@ -51,9 +51,6 @@
     <ClCompile Include="NotificationManager.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="InterfaceManager.h">
-      <Filter>Header Files</Filter>
-    </ClCompile>
     <ClCompile Include="InterfaceManager.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -89,6 +86,9 @@
     <ClInclude Include="NotificationStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClCompile Include="InterfaceManager.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
     <ClInclude Include="NotificationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
