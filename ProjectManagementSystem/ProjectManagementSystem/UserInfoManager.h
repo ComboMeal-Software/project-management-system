@@ -11,6 +11,7 @@
 #include <map>
 
 class User;
+class Project;
 
 class UserInfoManager {
 private:
@@ -24,6 +25,7 @@ private:
 public:
 	UserInfoManager();
 	void setName(std::string name);
+	void changePassword(std::string pass);
 	void changeFreetime(int time);
 	void addCurrentProjects(Project& project);
 	void addFinishedProjects(Project& project);

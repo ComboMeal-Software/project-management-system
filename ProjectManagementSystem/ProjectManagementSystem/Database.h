@@ -21,6 +21,9 @@ public:
 	void createUser(std::string name, std::string password, int free_time, std::string prerequisites, std::string StudyFields);
 	void createProject(User* initiator, std::string name, std::string objective, std::string tasks, std::string subjectField, std::string client, std::string deadline, std::string prerequisites);
 	User* getUser(std::string name);
+	bool checkUser(std::string name);
+	bool checkProject(std::string name);
+	Project* getProject(std::string name);
 	std::vector<User*> findParticipants(std::vector<std::string> prer);
 	std::vector<Project*> findProjects(std::vector<std::string> prer);
 	void deleteUser(std::string userName);

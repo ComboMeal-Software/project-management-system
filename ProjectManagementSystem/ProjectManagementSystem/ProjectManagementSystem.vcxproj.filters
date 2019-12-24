@@ -50,7 +50,13 @@
     </ClCompile>
     <ClCompile Include="NotificationStruct.cpp">
       <Filter>Resource Files</Filter>
-    </ClCompile>r
+    </ClCompile>
+    <ClCompile Include="Interface.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="NotificationManager.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ProjectClass.h">
@@ -80,10 +86,10 @@
     <ClInclude Include="Database.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interface.h">
+    <ClInclude Include="NotificationStruct.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="NotificationStruct.h">
+    <ClInclude Include="NotificationManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

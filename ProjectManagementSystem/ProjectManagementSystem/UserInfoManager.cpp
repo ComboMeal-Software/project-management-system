@@ -12,6 +12,13 @@ void UserInfoManager::setName(std::string n) {
 	name = n;
 
 }
+
+void UserInfoManager::changePassword(std::string pass) {
+
+	password == pass;
+
+}
+
 void UserInfoManager::changeFreetime(int time) {
 
 	freetime += time; // can be +time or -time, depends on what we want. but we need to check that freetime is not below zero! #exception
@@ -19,6 +26,7 @@ void UserInfoManager::changeFreetime(int time) {
 }
 void UserInfoManager::addPrerequisites(std::string pr) { // checking right input? #exception
 
+	prerequisites.clear();
 	while (pr.find(",") != std::string::npos)
 	{
 		prerequisites.push_back(pr.substr(0, pr.find(",")));
@@ -29,6 +37,7 @@ void UserInfoManager::addPrerequisites(std::string pr) { // checking right input
 }
 void UserInfoManager::addStudyFields(std::string sf) { // checking right input? #exception
 
+	StudyFields.clear();
 	while (sf.find(",") != std::string::npos)
 	{
 		StudyFields.push_back(sf.substr(0, sf.find(",")));

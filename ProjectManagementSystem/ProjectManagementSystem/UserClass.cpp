@@ -2,10 +2,12 @@
 #include "ProjectClass.h"
 #include "UserInfoManager.h"
 #include "RatingManager.h"
+#include "NotificationManager.h"
+#include "NotificationStruct.h"
 
 User::User(std::string n, std::string pass, int free_time, std::string prerequisites, std::string StudyFields) {
 
-	//notifications = new NotificationManager();
+	notifications = new NotificationManager();
 	ratingManager = new RatingManager();
 	infoManager = new UserInfoManager();
 	infoManager->setName(n);
@@ -14,9 +16,35 @@ User::User(std::string n, std::string pass, int free_time, std::string prerequis
 	infoManager->addStudyFields(StudyFields);
 	
 }
-void User::changeInfo() {
+void User::changeInfo(int i, std::string input) {
 
-	// Gotta work on this
+	int free_time = stoi(input);
+	switch (i)
+	{
+	case 1:
+		infoManager->setName(input);
+		break;
+
+	case 2:
+		infoManager->changePassword(input);
+		break;
+
+	case 3:
+		
+		infoManager->changeFreetime(free_time);
+		break;
+	
+	case 4:
+		infoManager->addPrerequisites(input);
+		break;
+
+	case 5:
+		infoManager->addStudyFields(input);
+		break;
+
+	default:
+		break;
+	}
 
 }
 
@@ -37,41 +65,72 @@ float User::getRating() {
 	ratingManager->getRating();
 
 }
+
 std::map<std::string, Project*> User::getCurrentProjects() {
 
 	infoManager->getCurrentProjects();
 
 }
+
 std::map<std::string, Project*> User::getFinishedProjects() {
 
 	infoManager->getFinishedProjects();
 
 }
+
 std::vector<std::string> User::getPrerequisites() {
 
 	infoManager->getPrerequisites();
 
 }
+
 std::vector<std::string> User::getStudyFields() {
 
 	infoManager->getStudyFields();
 
 }
+
 bool User::checkPassword(std::string pass) {
 
 	infoManager->checkPassword(pass);
 
 }
+
 void User::collectRating(float newRating) {
 
 	ratingManager->collectRating(newRating);
 
 }
+
 void User::deleteProject(std::string name) {
 
 	infoManager->deleteProject(name);
   
 }
+
+std::vector<Notification> User::extractNotifications() {
+
+	return notifications->getNewNots();
+
+}
+void User::returnNotifications(std::vector<Notification> returned) {
+
+	notifications->updateNotifications(returned);
+
+}
+
+int User::checkNotifications() {
+
+	return notifications->checkNotifications();
+
+}
+
+void User::addNewNotification(Notification notification) {
+
+	notifications->addNotification(notification);
+
+}
+
 User::~User() {
 
 	std::map<std::string, Project*> temp = infoManager->getCurrentProjects();
@@ -94,11 +153,11 @@ User::~User() {
 
 std::ostream& operator<<(std::ostream& os, const User& user) {
 
-	os << "User " << user.infoManager->getName() << std::endl;
-	os << "Rating: " << user.ratingManager->getRating() << std::endl;
-	os << "Current projects: " << user.infoManager->getCurrentProjects().size() << std::endl;
-	os << "Finished projects: " << user.infoManager->getFinishedProjects().size() << std::endl;
-	os << "Prerequisites: ";
+	os << "Пользователь " << user.infoManager->getName() << std::endl;
+	os << "Рейтинг: " << user.ratingManager->getRating() << std::endl;
+	os << "Текущие проекты: " << user.infoManager->getCurrentProjects().size() << std::endl;
+	os << "Законченные проекты: " << user.infoManager->getFinishedProjects().size() << std::endl;
+	os << "Навыки: ";
 	std::vector<std::string> temp = user.infoManager->getPrerequisites();
 	for (int i = 0; i < temp.size() - 1; i++) {
 		os << temp[i];
@@ -106,7 +165,7 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 	}
 	os << temp[temp.size()-1];
 	os << std::endl;
-	os << "Study Fields: ";
+	os << "Предпочитаемые предметные области: ";
 	temp = user.infoManager->getStudyFields();
 	for (int i = 0; i < temp.size() - 1; i++) {
 		os << temp[i];
