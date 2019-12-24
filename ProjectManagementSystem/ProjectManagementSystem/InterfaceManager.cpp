@@ -24,8 +24,10 @@ InterfaceManager::InterfaceManager()
 	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
 	database->createProject(database->getUser("GoldSwan"), "Gaming", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "turbo");
 	database->getUser("Thomas")->addNewNotification(Notification(invitation, "hey bro here is a project to do!", "GoldSwan", "Gaming"));
-	database->getUser("Thomas")->addNewNotification(Notification(notify, "hey bro I want to work on this project too!", "GoldSwan", "Test"));
-
+	database->getUser("admin")->addProject(database->getProject("Test"));
+	database->getProject("Test")->addParticipant(database->getUser("admin"));
+	database->getUser("GoldSwan")->addProject(database->getProject("Test"));
+	database->getProject("Test")->addParticipant(database->getUser("GoldSwan"));
 }
 
 void InterfaceManager::init() {
@@ -327,7 +329,7 @@ void InterfaceManager::displayNotification(Notification notification) {
 		break;
 	}
 	std::cout << ",  Отправитель: " << notification.sender;
-	if (notification.participants.size() != 0)
+	if (notification.participants.size() == 0)
 	{
 		std::cout << ",  Проект: " << notification.project;
 	}
@@ -425,7 +427,8 @@ void InterfaceManager::checkNotifications() {
 										std::cout << "Введена неправильная оценка, попробуйте еще раз: ";
 									}
 									else {
-
+										float rating = (float)rate;
+										p.second->collectRating(rating);
 										break;
 
 									}
@@ -435,6 +438,7 @@ void InterfaceManager::checkNotifications() {
 
 						}
 						participants.clear();
+						notifications.erase(notifications.begin() + number);
 					}
 					else if (input == "no") {
 			
@@ -442,8 +446,7 @@ void InterfaceManager::checkNotifications() {
 						break;
 			
 					}
-					else
-						break;
+					break;
 
 				case notify:
 

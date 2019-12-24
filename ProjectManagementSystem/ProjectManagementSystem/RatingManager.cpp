@@ -12,7 +12,7 @@ float RatingManager::getRating() {
 	int sum = 0;
 	for (int i = 0; i < rating.size(); i++)
 		sum += rating[i];
-	count = (float)sum / rating.size();
+	count = (float)sum / (rating.size() - 1);
 	return count;
 
 }
