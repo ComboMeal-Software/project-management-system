@@ -11,6 +11,7 @@ User::User(std::string n, std::string pass, int free_time, std::string prerequis
 	ratingManager = new RatingManager();
 	infoManager = new UserInfoManager();
 	infoManager->setName(n);
+	infoManager->changePassword(pass);
 	infoManager->changeFreetime(free_time);
 	infoManager->addPrerequisites(prerequisites);
 	infoManager->addStudyFields(StudyFields);

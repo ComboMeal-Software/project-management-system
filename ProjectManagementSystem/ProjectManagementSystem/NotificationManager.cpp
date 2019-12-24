@@ -1,6 +1,6 @@
 #include "NotificationManager.h"
 #include "NotificationStruct.h"
-#include "Interface.h"
+#include "InterfaceManager.h"
 #include "ProjectClass.h"
 #include <iostream>
 #include <vector>
