@@ -16,7 +16,7 @@ InterfaceManager::InterfaceManager()
 	};
 	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
 	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
-	database->createUser("admin", "admin", 99, "programming, c++, administration", "flex, beer, cool");
+	database->createUser("admin", "admin", 99, "programming, c++, flex, administration", "flex, beer, cool");
 }
 
 void InterfaceManager::init() {
@@ -224,6 +224,7 @@ void InterfaceManager::editInfo() {
 				std::getline(std::cin, input);
 				std::cout << std::endl;
 				if (input == "back")
+					std::cout << std::endl;
 					break;
 				currentUser->changeInfo(2, input);
 				std::cout << "Пароль успешно изменен." << std::endl;
