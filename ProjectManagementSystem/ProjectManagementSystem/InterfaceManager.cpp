@@ -17,6 +17,10 @@ InterfaceManager::InterfaceManager()
 	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
 	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
 	database->createUser("admin", "admin", 99, "programming, c++, administration", "flex, beer, cool");
+	currentUser = database->getUser("Thomas");
+	database->createProject(currentUser, "Test", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "c++, programming");
+	database->getProject("Test")->addParticipant(currentUser);
+	currentUser->addProject(database->getProject("Test"));
 }
 
 void InterfaceManager::init() {
@@ -657,6 +661,7 @@ void InterfaceManager::displayProjects()
 		else
 			if (input == "find_participants")
 			{
+				std::cin >> name;
 				findParticipants(name);
 			}
 			else

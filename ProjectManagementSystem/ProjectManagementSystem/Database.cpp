@@ -97,12 +97,12 @@ std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
 	for (const std::pair<std::string, User*>& p : users)
 	{
 		userPrer = p.second->getPrerequisites();
-		for (int i = 0; i < userPrer.size(); i++)
+		for (int i = 0; i < prer.size(); i++)
 		{
 			flag = false;
-			for (int j = 0; j < prer.size(); j++)
+			for (int j = 0; j < userPrer.size(); j++)
 			{
-				if (prer[j] == userPrer[i])
+				if (prer[i] == userPrer[j])
 				{
 					flag = true;
 					break;
