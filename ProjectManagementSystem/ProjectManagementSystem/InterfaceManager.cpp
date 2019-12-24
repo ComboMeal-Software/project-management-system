@@ -359,7 +359,8 @@ void InterfaceManager::checkNotifications() {
 		switch (notifications[number].type)
 				{
 				case message:
-					std::cout << "Введите delete для удаления уведомления или leave, чтобы вернуться";
+					std::cout << "Введите delete для удаления уведомления или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "delete"){
@@ -372,7 +373,8 @@ void InterfaceManager::checkNotifications() {
 						break;
 			
 				case invitation:
-					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление или \"Оставить\", чтобы вернуться";
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "accept") {
@@ -442,7 +444,8 @@ void InterfaceManager::checkNotifications() {
 
 				case notify:
 
-					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление и послать отказ или leave, чтобы вернуться";
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление и послать отказ или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "accept") {
