@@ -12,6 +12,13 @@ void UserInfoManager::setName(std::string n) {
 	name = n;
 
 }
+
+void UserInfoManager::changePassword(std::string pass) {
+
+	password = pass;
+
+}
+
 void UserInfoManager::changeFreetime(int time) {
 
 	freetime += time; // can be +time or -time, depends on what we want. but we need to check that freetime is not below zero! #exception
@@ -19,25 +26,27 @@ void UserInfoManager::changeFreetime(int time) {
 }
 void UserInfoManager::addPrerequisites(std::string pr) { // checking right input? #exception
 
+	prerequisites.clear();
 	while (pr.find(",") != std::string::npos)
 	{
 		prerequisites.push_back(pr.substr(0, pr.find(",")));
-		pr.substr(pr.find(",") + 1);
+		pr = pr.substr(pr.find(",") + 2);
 	}
 	prerequisites.push_back(pr);
 
 }
 void UserInfoManager::addStudyFields(std::string sf) { // checking right input? #exception
 
+	StudyFields.clear();
 	while (sf.find(",") != std::string::npos)
 	{
 		StudyFields.push_back(sf.substr(0, sf.find(",")));
-		sf.substr(sf.find(",") + 1);
+		sf = sf.substr(sf.find(",") + 2);
 	}
 	StudyFields.push_back(sf);
 
 }
-void UserInfoManager::addCurrentProjects(Project& project) {
+void UserInfoManager::addCurrentProjects(Project* project) {
 
 	/*
 
@@ -48,16 +57,16 @@ void UserInfoManager::addCurrentProjects(Project& project) {
 
 	 */
 
-	currentProjects[project.getName()] = &project;
+	currentProjects[project->getName()] = project;
 
 }
-void UserInfoManager::addFinishedProjects(Project& project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
+void UserInfoManager::addFinishedProjects(Project* project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
 
-	finishedProjects[project.getName()] = &project;
+	finishedProjects[project->getName()] = project;
 	/*std::map<std::string, Project*> ::iterator old_project;
 	old_project = currentProjects.find(project.getName());
 	currentProjects.erase(old_project);*/
-	currentProjects.erase(project.getName());
+	currentProjects.erase(project->getName());
 
 }
 std::string UserInfoManager::getName() {
@@ -107,16 +116,7 @@ void UserInfoManager::deleteProject(std::string name) {
 }
 UserInfoManager::~UserInfoManager()
 {
-	for (std::map<std::string, Project*>::iterator itr = currentProjects.begin(); itr != currentProjects.end(); itr++)
-	{
-		delete (itr->second);
-	}
 	currentProjects.clear();
-
-	for (std::map<std::string, Project*>::iterator itr = finishedProjects.begin(); itr != finishedProjects.end(); itr++)
-	{
-		delete (itr->second);
-	}
 	finishedProjects.clear();
 	prerequisites.clear();
 	StudyFields.clear();

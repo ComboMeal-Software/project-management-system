@@ -18,6 +18,27 @@ User* Database::getUser(std::string name)
 	return users[name];
 }
 
+bool Database::checkUser(std::string name) 
+{
+	if (users.count(name) == 0)
+		return true;
+	else
+		return false;
+}
+
+bool Database::checkProject(std::string name) 
+{
+	if (projects.count(name) == 0)
+		return true;
+	else
+		return false;
+}
+
+Project* Database::getProject(std::string name)
+{
+	return projects[name];
+}
+
 void Database::deleteUser(std::string userName)
 {
 	delete users[userName];
@@ -65,6 +86,7 @@ std::vector<Project*> Database::findProjects(std::vector<std::string> prer)
 			found.push_back(p.second);
 		}
 	}
+	return found;
 }
 
 std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
@@ -75,12 +97,12 @@ std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
 	for (const std::pair<std::string, User*>& p : users)
 	{
 		userPrer = p.second->getPrerequisites();
-		for (int i = 0; i < userPrer.size(); i++)
+		for (int i = 0; i < prer.size(); i++)
 		{
 			flag = false;
-			for (int j = 0; j < prer.size(); j++)
+			for (int j = 0; j < userPrer.size(); j++)
 			{
-				if (prer[j] == userPrer[i])
+				if (prer[i] == userPrer[j])
 				{
 					flag = true;
 					break;
@@ -95,5 +117,27 @@ std::vector<User*> Database::findParticipants(std::vector<std::string> prer)
 		{
 			found.push_back(p.second);
 		}
+	}
+	return found;
+}
+
+Database::~Database()
+{
+	{
+		for (std::map<std::string, User*>::iterator itr = users.begin(); itr != users.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		users.clear();
+		for (std::map<std::string, Project*>::iterator itr = projects.begin(); itr != projects.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		projects.clear();
+		for (std::map<std::string, Project*>::iterator itr = finishedProjects.begin(); itr != finishedProjects.end(); itr++)
+		{
+			delete (itr->second);
+		}
+		finishedProjects.clear();
 	}
 }

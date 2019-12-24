@@ -37,20 +37,16 @@ public:
 	std::map<std::string, Project*> getFinishedProjects();
 	std::vector<std::string> getPrerequisites();
 	std::vector<std::string> getStudyFields();
+	void addProject(Project* project);
 	bool checkPassword(std::string pass);
-	void changeInfo(); // UserInfoManager
+	void changeInfo(int i, std::string input); // UserInfoManager to be done!!!
 	void collectRating(float newRating);
 	void deleteProject(std::string name);
-
+	int checkNotifications();
+	std::vector<Notification> extractNotifications();
+	void returnNotifications(std::vector<Notification> returned);
 	void addNewNotification(Notification notification);
-	void checkNotifications();
-	void checkNewProjects();
-	void checkCurrentProjects();
-	void displayFinishedProjects(); // needed or not? seems like an interface thing, we already got getFinishedProjects
-	void findNewProjects();
-	void applyToNewProjects(Project* activeProject);
-	void workOnProject(Project* activeProject);
-	void createProject();
+	
 	~User();
 	friend std::ostream& operator<<(std::ostream& os, const User& user);
 };

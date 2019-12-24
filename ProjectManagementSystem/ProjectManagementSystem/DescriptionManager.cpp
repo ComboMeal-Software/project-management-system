@@ -7,7 +7,7 @@ DescriptionManager::DescriptionManager(std::string n, std::string ob, std::strin
 	tasks = t;
 	subjectField = sf;
 	client = c;
-	addPrerequisites(prer);
+	setPrerequisites(prer);
 }
 
 void DescriptionManager::setName(std::string n)
@@ -35,12 +35,13 @@ void DescriptionManager::setClient(std::string c)
 	client = c;
 }
 
-void DescriptionManager::addPrerequisites(std::string pr)
+void DescriptionManager::setPrerequisites(std::string pr)
 {
+	prerequisites.clear();
 	while (pr.find(",") != std::string::npos)
 	{
 		prerequisites.push_back(pr.substr(0,pr.find(",")));
-		pr.substr(pr.find(",") + 1);
+		pr = pr.substr(pr.find(",") + 2);
 	}
 	prerequisites.push_back(pr);
 }

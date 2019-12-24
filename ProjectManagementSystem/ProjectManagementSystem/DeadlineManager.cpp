@@ -6,7 +6,7 @@ void DeadlineManager::stringToDate(std::string dt)
 	dt = dt.substr(dt.find("/") + 1);
 	month = stoi(dt.substr(dt.find("/") - 2, 2));
 	dt = dt.substr(dt.find("/") + 1);
-	year= stoi(dt.substr(dt.find("/") - 2, 2));
+	year = stoi(dt);
 }
 
 DeadlineManager::DeadlineManager(std::string dt)

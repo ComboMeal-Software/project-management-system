@@ -4,6 +4,7 @@
 #ifndef RATINGMANAGER_H
 #define RATINGMANAGER_H
 
+#include <vector>
 #include <iostream>
 
 class RatingManager {
