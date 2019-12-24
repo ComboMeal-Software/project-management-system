@@ -155,7 +155,7 @@ std::ostream& operator<<(std::ostream& os, const User& user) {
 		os << temp[i];
 		os << ", ";
 	}
-	os << temp[temp.size()-1];
+	os << temp[temp.size() - 1];
 	os << std::endl;
 	os << "Предпочитаемые предметные области: ";
 	temp = user.infoManager->getStudyFields();
