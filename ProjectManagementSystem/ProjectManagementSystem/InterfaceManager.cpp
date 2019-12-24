@@ -22,6 +22,10 @@ InterfaceManager::InterfaceManager()
 	database->getProject("Test")->addParticipant(currentUser);
 	currentUser->addProject(database->getProject("Test"));
 	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
+	database->createProject(database->getUser("GoldSwan"), "Gaming", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "turbo");
+	database->getUser("Thomas")->addNewNotification(Notification(invitation, "hey bro here is a project to do!", "GoldSwan", "Gaming"));
+	database->getUser("Thomas")->addNewNotification(Notification(notify, "hey bro I want to work on this project too!", "GoldSwan", "Test"));
+
 }
 
 void InterfaceManager::init() {
@@ -355,7 +359,8 @@ void InterfaceManager::checkNotifications() {
 		switch (notifications[number].type)
 				{
 				case message:
-					std::cout << "Введите delete для удаления уведомления или leave, чтобы вернуться";
+					std::cout << "Введите delete для удаления уведомления или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "delete"){
@@ -368,7 +373,8 @@ void InterfaceManager::checkNotifications() {
 						break;
 			
 				case invitation:
-					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление или \"Оставить\", чтобы вернуться";
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "accept") {
@@ -438,7 +444,8 @@ void InterfaceManager::checkNotifications() {
 
 				case notify:
 
-					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление и послать отказ или leave, чтобы вернуться";
+					std::cout << "Введите accept для записи в проект, decline чтобы удалить уведомление и послать отказ или leave, чтобы вернуться" << std::endl;
+					std::cout << std::endl;
 					fflush(stdin);
 					std::getline(std::cin, input);
 					if (input == "accept") {
