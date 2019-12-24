@@ -327,7 +327,11 @@ void InterfaceManager::displayNotification(Notification notification) {
 		break;
 	}
 	std::cout << ",  Отправитель: " << notification.sender;
-	std::cout << ",  Проект: " << notification.project;
+	if (notification.participants.size() != 0)
+	{
+		std::cout << ",  Проект: " << notification.project;
+	}
+	
 	std::cout << std::endl;
 
 }
@@ -401,8 +405,7 @@ void InterfaceManager::checkNotifications() {
 					std::getline(std::cin, input);
 					if (input == "yes") {
 
-						Project* project = database->getProject(notifications[number].project);
-						std::map<std::string, User*> participants = project->getParticipants();
+						std::map<std::string, User*> participants = notifications[number].participants;
 						for (const std::pair<std::string, User*>& p : participants) {
 
 							if (p.second == currentUser) {
@@ -815,7 +818,7 @@ void InterfaceManager::editProject(std::string name)
 														std::cout << "Участники проекта получат уведомления с просьбой оценить работу других участников. Введите ваше прощальное сообщение." << std::endl;
 														std::getline(std::cin, mes);
 														std::getline(std::cin, mes);
-														Notification tempNot = Notification(rating, mes, currentUser->getName(), name);
+														Notification tempNot = Notification(rating, mes, currentUser->getName(), temp);
 														for (const std::pair<std::string, User*>& p : temp)
 														{
 															p.second->addNewNotification(tempNot);
