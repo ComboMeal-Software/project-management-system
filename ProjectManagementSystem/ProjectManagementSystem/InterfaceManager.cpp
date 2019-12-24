@@ -12,11 +12,11 @@ InterfaceManager::InterfaceManager()
 	status = "start";
 	commands = {
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
-		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", " help - просмотр доступных команд"}}
+		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", "help - просмотр доступных команд"}}
 	};
 	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
 	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
-	database->createUser("admin", "admin", 99, "administration, c++, programming", "flex, beer, cool");
+	database->createUser("admin", "admin", 99, "programming, c++, administration", "flex, beer, cool");
 }
 
 void InterfaceManager::init() {

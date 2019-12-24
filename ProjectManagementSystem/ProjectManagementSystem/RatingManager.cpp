@@ -3,6 +3,8 @@
 
 RatingManager::RatingManager() {
 
+	collectRating(0);
+
 }
 float RatingManager::getRating() {
 

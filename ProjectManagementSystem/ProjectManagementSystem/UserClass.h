@@ -37,6 +37,7 @@ public:
 	std::map<std::string, Project*> getFinishedProjects();
 	std::vector<std::string> getPrerequisites();
 	std::vector<std::string> getStudyFields();
+	void addProject(Project* project);
 	bool checkPassword(std::string pass);
 	void changeInfo(int i, std::string input); // UserInfoManager to be done!!!
 	void collectRating(float newRating);

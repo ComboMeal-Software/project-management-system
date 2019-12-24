@@ -84,6 +84,11 @@ std::vector<std::string> User::getStudyFields() {
 	return infoManager->getStudyFields();
 }
 
+void User::addProject(Project* project)
+{
+	infoManager->addCurrentProjects(project);
+}
+
 bool User::checkPassword(std::string pass) {
 
 	return infoManager->checkPassword(pass);
@@ -146,6 +151,8 @@ User::~User() {
 std::ostream& operator<<(std::ostream& os, const User& user) {
 
 	os << "Пользователь " << user.infoManager->getName() << std::endl;
+	if (user.ratingManager->getRating() == 0)
+		os << "Рейтинг: " << "не определен" << std::endl;
 	os << "Рейтинг: " << user.ratingManager->getRating() << std::endl;
 	os << "Текущие проекты: " << user.infoManager->getCurrentProjects().size() << std::endl;
 	os << "Законченные проекты: " << user.infoManager->getFinishedProjects().size() << std::endl;

@@ -46,7 +46,7 @@ void UserInfoManager::addStudyFields(std::string sf) { // checking right input? 
 	StudyFields.push_back(sf);
 
 }
-void UserInfoManager::addCurrentProjects(Project& project) {
+void UserInfoManager::addCurrentProjects(Project* project) {
 
 	/*
 
@@ -57,16 +57,16 @@ void UserInfoManager::addCurrentProjects(Project& project) {
 
 	 */
 
-	currentProjects[project.getName()] = &project;
+	currentProjects[project->getName()] = project;
 
 }
-void UserInfoManager::addFinishedProjects(Project& project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
+void UserInfoManager::addFinishedProjects(Project* project) { // can be a situation that project is added to finishedProjects, but it was not in currentProjects? #exception ?
 
-	finishedProjects[project.getName()] = &project;
+	finishedProjects[project->getName()] = project;
 	/*std::map<std::string, Project*> ::iterator old_project;
 	old_project = currentProjects.find(project.getName());
 	currentProjects.erase(old_project);*/
-	currentProjects.erase(project.getName());
+	currentProjects.erase(project->getName());
 
 }
 std::string UserInfoManager::getName() {
