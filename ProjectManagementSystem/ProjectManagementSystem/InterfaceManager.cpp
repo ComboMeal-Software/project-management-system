@@ -185,7 +185,7 @@ void InterfaceManager::editInfo() {
 
 	while (true) {
 
-		std::cout << currentUser << std::endl;
+		std::cout << *currentUser << std::endl;
 		std::cout << std::endl;
 		std::cout << "Какую информацию вы бы хотели изменить?" << std::endl;
 		std::cout << "введите одно из следующих: Пароль, Время, Навыки, Предметные области" << std::endl;
@@ -599,7 +599,7 @@ void InterfaceManager::displayProjects()
 				break;
 			else
 			{
-				std::cout << projects[name];
+				std::cout << *(projects[name]);
 			}
 	}
 	projects.clear();

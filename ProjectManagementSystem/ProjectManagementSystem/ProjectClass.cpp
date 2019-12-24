@@ -119,11 +119,12 @@ std::ostream& operator<<(std::ostream& os, const Project& pr)
 	os << "Предметная область - " << pr.description->getSubjectField() << std::endl;
 	os << "Заказчик - " << pr.description->getClient() << std::endl;
 	os << "Необходимые навыки: ";
-	std::vector<std::string> *temp = &pr.description->getPrerequisites();
-	for (int i = 0; i < temp->size(); i++)
+	std::vector<std::string> temp = pr.description->getPrerequisites();
+	for (int i = 0; i < temp.size() - 1; i++)
 	{
-		os << temp->operator[](i) << ", ";
+		os << temp[i] << ", ";
 	}
+	os << temp[temp.size() - 1];
 	os << std::endl;
 	os << "Дедлайн - " << pr.deadline->getDeadline() << std::endl;
 	os << "Люди:" << std::endl;
