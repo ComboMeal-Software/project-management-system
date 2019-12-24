@@ -138,8 +138,15 @@ void InterfaceManager::login(std::string name, std::string password) {
 				editInfo();
 
 			else if (input == "check_notifications")
-				checkNotifications();
-
+			{
+				if (currentUser->checkNotifications() == 0)
+				{
+					std::cout << "У вас нет новых уведомлений." << std::endl;
+				}
+				else
+					checkNotifications();
+			}
+			
 			else
 				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд." << std::endl;
 
