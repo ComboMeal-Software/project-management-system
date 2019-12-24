@@ -21,6 +21,7 @@ InterfaceManager::InterfaceManager()
 	database->createProject(currentUser, "Test", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "c++, programming");
 	database->getProject("Test")->addParticipant(currentUser);
 	currentUser->addProject(database->getProject("Test"));
+	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
 }
 
 void InterfaceManager::init() {
@@ -586,15 +587,24 @@ void InterfaceManager::findParticipants(std::string name)
 	std::cout << "Выйти - back";
 	std::vector<User*> temp = database->findParticipants(tempPro->getPrerequisites());
 	std::map<std::string, User*> tempPar = tempPro->getParticipants();
-	for (int i = 0; i < temp.size(); i++)
+	bool flag = false;
+	while (flag == false)
 	{
-		if (tempPar.count(temp[i]->getName()) == 1)
-			temp.erase(temp.begin() + i);
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (tempPar.count(temp[i]->getName()) == 1)
+			{
+				temp.erase(temp.begin() + i);
+				break;
+			}
+			if (i == (temp.size() - 1))
+				flag = true;
+		}
 	}
 	std::cout << "Подходящие вам пользователи:" << std::endl;
 	if (temp.size() == 0)
 	{
-		std::cout << "Подходящие проекты отсутсвуют" << std::endl;
+		std::cout << "Подходящие пользователи отсутсвуют." << std::endl;
 		return;
 	}
 	for (int i = 0; i < temp.size(); i++)
@@ -603,7 +613,7 @@ void InterfaceManager::findParticipants(std::string name)
 	}
 	std::cout << std::endl;
 	std::cout << "Введите номер пользователя, чтобы показать подробную информацию." << std::endl;
-	std::cout << "invite [number] - отправить приглашение в проект";
+	std::cout << "invite [number] - отправить приглашение в проект" << std::endl;
 	while (true)
 	{
 		std::cin >> input;
@@ -616,6 +626,7 @@ void InterfaceManager::findParticipants(std::string name)
 			std::getline(std::cin, message);
 			Notification tempn = Notification(invitation, message, currentUser->getName(), name);
 			temp[std::stoi(input)]->addNewNotification(tempn);
+			std::cout << "Приглашение отправлено!" << std::endl;
 		}
 		else
 			if (input == "back")
@@ -664,6 +675,7 @@ void InterfaceManager::displayProjects()
 			{
 				std::cin >> name;
 				findParticipants(name);
+				std::cout << "Поиск участников завершен" << std::endl;
 			}
 			else
 				if (input == "back")
