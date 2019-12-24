@@ -715,6 +715,7 @@ void InterfaceManager::editProject(std::string name)
 		fflush(stdin);
 		std::getline(std::cin, input);
 		std::getline(std::cin, input);
+		std::cout << std::endl;
 		if (input == "back")
 			break;
 		else
@@ -813,6 +814,7 @@ void InterfaceManager::editProject(std::string name)
 															temp.insert({ project->getManager()->getName(), project->getManager() });
 														std::cout << "Участники проекта получат уведомления с просьбой оценить работу других участников. Введите ваше прощальное сообщение." << std::endl;
 														std::getline(std::cin, mes);
+														std::getline(std::cin, mes);
 														Notification tempNot = Notification(rating, mes, currentUser->getName(), name);
 														for (const std::pair<std::string, User*>& p : temp)
 														{
@@ -821,7 +823,8 @@ void InterfaceManager::editProject(std::string name)
 														database->deleteProject(project->getName());
 														std::cout << "Проект был успешно закрыт." << std::endl;
 													}
-													std::cout << "Вы избежали непоправимой ошибки." << std::endl;
+													else
+														std::cout << "Вы избежали непоправимой ошибки." << std::endl;
 												}
 												else
 													std::cout << "У вас недостаточно прав." << std::endl;

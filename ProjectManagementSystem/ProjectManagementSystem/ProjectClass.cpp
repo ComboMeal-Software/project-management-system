@@ -158,7 +158,8 @@ Project::~Project()
 {
 	std::map<std::string, User*> tempm = roles->getParticipants();
 	tempm.insert(std::pair<std::string, User*>(roles->getInitiator()->getName(), roles->getInitiator()));
-	tempm.insert(std::pair<std::string, User*>(roles->getManager()->getName(), roles->getManager()));
+	if (roles->getManager() != NULL)
+		tempm.insert(std::pair<std::string, User*>(roles->getManager()->getName(), roles->getManager()));
 	for (const std::pair<std::string, User*>& p : tempm)
 	{
 		p.second->deleteProject(description->getName());
