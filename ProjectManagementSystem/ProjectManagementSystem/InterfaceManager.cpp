@@ -12,7 +12,7 @@ InterfaceManager::InterfaceManager()
 	status = "start";
 	commands = {
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
-		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", "help - просмотр доступных команд"}}
+		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "find_projects - найти подходящий проект", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", "help - просмотр доступных команд"}}
 	};
 	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
 	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
@@ -152,7 +152,8 @@ void InterfaceManager::login(std::string name, std::string password) {
 
 			else if (input == "edit_info")
 				editInfo();
-
+			else if (input == "find_projects")
+				findProjects();
 			else if (input == "check_notifications")
 			{
 				if (currentUser->checkNotifications() == 0)
