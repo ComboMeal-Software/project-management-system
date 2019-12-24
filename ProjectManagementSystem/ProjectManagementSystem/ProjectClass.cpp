@@ -50,6 +50,11 @@ std::string Project::getName()
 	return description->getName();
 }
 
+std::string Project::getObjective()
+{
+	return description->getObjective();
+}
+
 unsigned char Project::getDeadlineDay()
 {
 	return deadline->getDeadlineDay();

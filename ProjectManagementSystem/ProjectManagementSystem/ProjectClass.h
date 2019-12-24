@@ -37,6 +37,7 @@ public:
 	unsigned char getDeadlineDay();
 	unsigned char getDeadlineMonth();
 	unsigned short getDeadlineYear();
+	std::string getObjective();
 	std::string getStatus();
 	void setSubjectField(std::string subjectField);
 	void setDeadline(std::string dl);

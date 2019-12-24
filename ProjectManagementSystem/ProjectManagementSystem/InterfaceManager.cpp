@@ -22,6 +22,10 @@ InterfaceManager::InterfaceManager()
 	database->getProject("Test")->addParticipant(currentUser);
 	currentUser->addProject(database->getProject("Test"));
 	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
+	database->createProject(database->getUser("GoldSwan"), "Gaming", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "turbo");
+	database->getUser("Thomas")->addNewNotification(Notification(invitation, "hey bro here is a project to do!", "GoldSwan", "Gaming"));
+	database->getUser("Thomas")->addNewNotification(Notification(notify, "hey bro I want to work on this project too!", "GoldSwan", "Test"));
+
 }
 
 void InterfaceManager::init() {
@@ -651,7 +655,7 @@ void InterfaceManager::findParticipants(std::string name)
 void InterfaceManager::displayProjects()
 {
 	std::string name;
-	std::cout << "Выйти - back";
+	std::cout << "Выйти - back" << std::endl;
 	std::map<std::string, Project*> projects = currentUser->getCurrentProjects();
 	std::cout << "Вы состоите в следующих проектах: " << std::endl;
 	if (projects.size() == 0)
@@ -661,11 +665,11 @@ void InterfaceManager::displayProjects()
 	}
 	for (const std::pair<std::string, Project*> p : projects)
 	{
-		std::cout << p.first << " " << p.second->getName();
+		std::cout << p.first << " " << p.second->getObjective() << std::endl;
 	}
 	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
-	std::cout << "edit [name] - изменить информацию о проекте (только для инициаторов и менеджеров проекта)";
-	std::cout << "find_participants [name] - найти участников для проекта";
+	std::cout << "edit [name] - изменить информацию о проекте (только для инициаторов и менеджеров проекта)" << std::endl;
+	std::cout << "find_participants [name] - найти участников для проекта" << std::endl;
 	while (true)
 	{
 		std::cin >> input;
@@ -703,7 +707,8 @@ void InterfaceManager::editProject(std::string name)
 	while (true)
 	{
 		std::cout << "Какую информацию вы бы хотели изменить?: Статус, Цель, Задачи, Предметная область, Заказчик, Дедлайн, Необходимые навыки, Менеджер (только для инициаторов)" << std::endl;
-		std::cout << "Выйти - back";
+		std::cout << "Закрыть проект - close (только для инициаторов)" << std::endl;
+		std::cout << "Выйти - back" << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
 		if (input == "back")
@@ -712,9 +717,12 @@ void InterfaceManager::editProject(std::string name)
 		{
 			if (input == "Статус")
 			{
-				std::cout << "Введите статус ";
+				std::cout << "Введите статус (Initialization, Recruitment, Active, Closed)" << std::endl;
 				std::getline(std::cin, input);
-				project->setStatus(input);
+				if ((input != "Initialization") && (input != "Recruitment") && (input != "Active") && (input != "Closed"))
+					std::cout << "Введен неверный статус";
+				else
+					project->setStatus(input);
 			}
 			else
 				if (input == "Цель")
@@ -769,8 +777,39 @@ void InterfaceManager::editProject(std::string name)
 												database->getUser(input)->addProject(project);
 											}
 											else
-												std::cout << "У вас недостаточно прав.";
+												std::cout << "У вас недостаточно прав." << std::endl;
 										}
+										else
+											if (input == "close")
+											{
+												if (project->getInitiator()->getName() == currentUser->getName())
+												{
+													while (true)
+													{
+														std::cout << "Закрыть проект " << name << " ? Y/N" << std::endl;
+														std::cin >> input;
+														if (input == "Y" || input == "N")
+															break;
+													}
+													if (input == "Y")
+													{
+														std::string mes;
+														std::map<std::string, User*> temp = project->getParticipants();
+														temp.insert({ project->getManager()->getName(), project->getManager() });
+														std::cout << "Участники проекта получат уведомления с просьбой оценить работу других участников. Введите ваше прощальное сообщение." << std::endl;
+														std::getline(std::cin, mes);
+														Notification tempNot = Notification(rating, mes, currentUser->getName(), name);
+														for (const std::pair<std::string, User*>& p : temp)
+														{
+															p.second->addNewNotification(tempNot);
+														}
+														std::cout << "Проект был успешно закрыт." << std::endl;
+													}
+													std::cout << "Вы избежали непоправимой ошибки." << std::endl;
+												}
+												else
+													std::cout << "У вас недостаточно прав." << std::endl;
+											}
 		}
 	}
 	delete project;
