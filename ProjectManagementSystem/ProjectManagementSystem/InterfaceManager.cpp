@@ -14,6 +14,7 @@ InterfaceManager::InterfaceManager()
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
 		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", " help - просмотр доступных команд"}}
 	};
+	database->createUser("Thomas", "12345", 7, "c++, sex, turbo", "SEX, monster energy), realno flexim");
 }
 
 void InterfaceManager::init() {
@@ -63,15 +64,17 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 
 	if (database->checkUser(name)) {
 		fflush(stdin);
-		std::string prerequisites;
+		std::string prer;
 		std::string studyFields;
 		int free_time;
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
 		std::cout << "Введите дополнительные данные. В дальнейшем информация может быть изменена." << std::endl;
 		std::cout << "Выйти - back" << std::endl;
 		std::cout << "Введите Ваши навыки через запятую: " << std::endl;
-		std::getline(std::cin, prerequisites);
-		if (prerequisites == "back")
+		fflush(stdin);
+		std::getline(std::cin, prer);
+		std::getline(std::cin, prer);
+		if (prer == "back")
 			return;
 		std::cout << std::endl;
 		fflush(stdin);
@@ -88,7 +91,7 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 			return;
 		free_time = std::stoi(time_string); // #exception
 		fflush(stdin);
-		database->createUser(name, password, free_time, prerequisites, studyFields);
+		database->createUser(name, password, free_time, prer, studyFields);
 		std::cout << std::endl;
 		std::cout << "Успешно создан новый профиль \"" << name << "\"!" << std::endl;
 		std::cout << "Пожалуйста, зайдите в систему под своим именем и паролем" << std::endl;
@@ -459,6 +462,8 @@ void InterfaceManager::createProject()
 	std::cout << "Имя проекта: ";
 	std::getline(std::cin, name);
 	if (name == "back")
+		return;
+	if (!database->checkProject(name))
 		return;
 	std::cout << std::endl;
 	std::cout << "Цель проекта: ";
