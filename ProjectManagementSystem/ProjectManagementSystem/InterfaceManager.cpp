@@ -63,15 +63,16 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 
 	if (database->checkUser(name)) {
 		fflush(stdin);
-		std::string prerequisites;
+		std::string prer;
 		std::string studyFields;
 		int free_time;
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
 		std::cout << "Введите дополнительные данные. В дальнейшем информация может быть изменена." << std::endl;
 		std::cout << "Выйти - back" << std::endl;
 		std::cout << "Введите Ваши навыки через запятую: " << std::endl;
-		std::getline(std::cin, prerequisites);
-		if (prerequisites == "back")
+		std::getline(std::cin, prer); 
+		std::getline(std::cin, prer);
+		if (prer == "back")
 			return;
 		std::cout << std::endl;
 		fflush(stdin);
@@ -88,7 +89,7 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 			return;
 		free_time = std::stoi(time_string); // #exception
 		fflush(stdin);
-		database->createUser(name, password, free_time, prerequisites, studyFields);
+		database->createUser(name, password, free_time, prer, studyFields);
 		std::cout << std::endl;
 		std::cout << "Успешно создан новый профиль \"" << name << "\"!" << std::endl;
 		std::cout << "Пожалуйста, зайдите в систему под своим именем и паролем" << std::endl;
@@ -100,15 +101,17 @@ void InterfaceManager::registerUser(std::string name, std::string password) {
 
 void InterfaceManager::login(std::string name, std::string password) {
 
-	User* user = database->getUser(name);
-	if (user->checkPassword(password)) {
+	//User* user = database->getUser(name);
+	if (database->getUser(name)->checkPassword(password)) {
 
-		currentUser = user;
+		currentUser = database->getUser(name);
 		status = "logged_in";
 		std::cout << "Добро пожаловать, " << name << "!" << std::endl;
 		std::cout << "Новых уведомлений: " << currentUser->checkNotifications() <<std::endl;
 		std::cout << "Для просмотра доступных команд используйте help." << std::endl;
 		std::cout << "Для выхода из системы используйте logout." << std::endl;
+		fflush(stdin);
+		std::getline(std::cin, input);
 		do {
 
 			fflush(stdin);
@@ -137,7 +140,7 @@ void InterfaceManager::login(std::string name, std::string password) {
 				checkNotifications();
 
 			else
-				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд.";
+				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд." << std::endl;
 
 		} while (true);
 		

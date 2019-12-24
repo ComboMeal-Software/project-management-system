@@ -15,7 +15,7 @@ void UserInfoManager::setName(std::string n) {
 
 void UserInfoManager::changePassword(std::string pass) {
 
-	password == pass;
+	password = pass;
 
 }
 
@@ -30,7 +30,7 @@ void UserInfoManager::addPrerequisites(std::string pr) { // checking right input
 	while (pr.find(",") != std::string::npos)
 	{
 		prerequisites.push_back(pr.substr(0, pr.find(",")));
-		pr = pr.substr(pr.find(",") + 1);
+		pr = pr.substr(pr.find(",") + 2);
 	}
 	prerequisites.push_back(pr);
 
@@ -38,10 +38,10 @@ void UserInfoManager::addPrerequisites(std::string pr) { // checking right input
 void UserInfoManager::addStudyFields(std::string sf) { // checking right input? #exception
 
 	StudyFields.clear();
-	while (sf.find(",") != std::string::npos) // doesn't work
+	while (sf.find(",") != std::string::npos)
 	{
 		StudyFields.push_back(sf.substr(0, sf.find(",")));
-		sf = sf.substr(sf.find(",") + 1);
+		sf = sf.substr(sf.find(",") + 2);
 	}
 	StudyFields.push_back(sf);
 
