@@ -152,7 +152,6 @@ Project::Project(User* initiator, std::string name, std::string objective, std::
 	description = new DescriptionManager(name, objective, tasks, subjectField, client, prerequisites);
 	roles = new RoleManager(initiator);
 	statusIndicator = new StatusManager();
-	initiator->addProject(this);
 }
 
 Project::~Project()
