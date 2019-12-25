@@ -548,13 +548,22 @@ void InterfaceManager::createProject()
 void InterfaceManager::findProjects()
 {
 	fflush(stdin);
-	std::cout << "Выйти - back";
+	std::cout << "Выйти - back" << std::endl;
 	std::vector<Project*> temp = database->findProjects(currentUser->getPrerequisites());
 	std::map<std::string, Project*> tempcu = currentUser->getCurrentProjects();
-	for (int i = 0; i < temp.size(); i++)
+	bool flag = false;
+	while (flag == false)
 	{
-		if (tempcu.count(temp[i]->getName()) == 1)
-			temp.erase(temp.begin() + i);
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (tempcu.count(temp[i]->getName()) == 1)
+			{
+				temp.erase(temp.begin() + i);
+				break;
+			}
+			if (i == (temp.size() - 1))
+				flag = true;
+		}
 	}
 	std::cout << "Подходящие вам проекты:" << std::endl;
 	if (temp.size() == 0)
@@ -568,7 +577,7 @@ void InterfaceManager::findProjects()
 	}
 	std::cout << std::endl;
 	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
-	std::cout << "apply [number] - подать заявку на участие в проекте";
+	std::cout << "apply [number] - подать заявку на участие в проекте" << std::endl;
 	while (true)
 	{
 		std::cin >> input;
@@ -579,8 +588,10 @@ void InterfaceManager::findProjects()
 			std::string message;
 			std::cout << "Введите ваше сообщение." << std::endl;
 			std::getline(std::cin, message);
+			std::getline(std::cin, message);
 			Notification tempn = Notification(notify, message, currentUser->getName(), temp[std::stoi(input)]->getName());
 			temp[std::stoi(input)]->getInitiator()->addNewNotification(tempn);
+			std::cout << "Заявка отправлена!" << std::endl;
 		}
 		else
 			if (input == "back")
