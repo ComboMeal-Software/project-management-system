@@ -163,7 +163,7 @@ void InterfaceManager::login(std::string name, std::string password) {
 	}
 	else {
 
-		std::cout << " Введено неверное имя или пароль. Попробуйте еще раз." << std::endl;
+		std::cout << "Введено неверное имя или пароль. Попробуйте еще раз." << std::endl;
 
 	}
 }
@@ -199,6 +199,7 @@ void InterfaceManager::editInfo() {
 		std::cout << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
+		std::cout << std::endl;
 		if (input == "back")
 			break;
 		/*else if (input == "Имя"){  ВНИМАНИЕ! ИЗМЕНЕНИЕ ИМЕНИ НЕ ВЛИЯЕТ НА DATABASE!
@@ -247,6 +248,8 @@ void InterfaceManager::editInfo() {
 			std::cout << "(если время нужно уменьшить, то введите отрицательное число)" << std::endl;
 			std::getline(std::cin, input);
 			std::cout << std::endl;
+			if (input == "back")
+				break;
 			currentUser->changeInfo(3, input);
 			std::cout << "Время успешно изменено." << std::endl;
 
@@ -570,6 +573,7 @@ void InterfaceManager::findProjects()
 	if (temp.size() == 0)
 	{
 		std::cout << "Подходящие проекты отсутсвуют" << std::endl;
+		std::cout << std::endl;
 		return;
 	}
 	for (int i = 0; i < temp.size(); i++)
