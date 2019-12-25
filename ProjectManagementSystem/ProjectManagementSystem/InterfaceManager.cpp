@@ -14,20 +14,15 @@ InterfaceManager::InterfaceManager()
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
 		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "find_projects - найти подходящий проект", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", "help - просмотр доступных команд"}}
 	};
-	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
-	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
-	database->createUser("admin", "admin", 99, "programming, c++, flex, administration", "flex, beer, cool");
-	currentUser = database->getUser("Thomas");
-	database->createProject(currentUser, "Test", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "c++, programming");
-	database->getProject("Test")->addParticipant(currentUser);
-	currentUser->addProject(database->getProject("Test"));
-	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
-	database->createProject(database->getUser("GoldSwan"), "Gaming", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "turbo");
-	database->getUser("Thomas")->addNewNotification(Notification(invitation, "hey bro here is a project to do!", "GoldSwan", "Gaming"));
-	database->getUser("admin")->addProject(database->getProject("Test"));
-	database->getProject("Test")->addParticipant(database->getUser("admin"));
-	database->getUser("GoldSwan")->addProject(database->getProject("Test"));
-	database->getProject("Test")->addParticipant(database->getUser("GoldSwan"));
+	database->createUser("Thomas", "12345", 7, "programming, c++, maths", "programming, style, design");
+	database->createUser("Vladimir", "pepega_cool", 6, "programming, c++, administration", "programming, javascript");
+	database->createUser("Oleg", "admin", 99, "programming, c++, design , administration", "programming");
+	database->createUser("Igor", "Igor", 10, "programming, c++, drawing , administration", "programming, drawing, design");
+	database->createProject(database->getUser("Thomas"), "Kursovaya_rabota", "programming project", "learn, code, be cool", "programming", "Miroslav", "25/12/2019", "programming, c++");
+	database->getProject("Kursovaya_rabota")->addParticipant(database->getUser("Oleg"));
+	database->getUser("Oleg")->addProject(database->getProject("Kursovaya_rabota"));
+	database->getUser("Thomas")->addNewNotification(Notification(message, "Отказ: я считаю, что вы не подходите под этот проект", "Oleg", "Biology"));
+	database->getUser("Thomas")->addNewNotification(Notification(notify, "Я бы хотел поучаствовать в вашем проекте!", "Igor", "Kursovaya_rabota"));
 }
 
 void InterfaceManager::init() {
