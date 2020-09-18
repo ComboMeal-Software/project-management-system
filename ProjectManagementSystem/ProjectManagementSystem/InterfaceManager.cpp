@@ -14,20 +14,17 @@ InterfaceManager::InterfaceManager()
 		{"start", {"register [name] [password] - зарегистрироваться в системе", "login [name] [password] - войти в систему", "help - просмотр доступных команд", "exit - завершить выполнение программы"}},
 		{"logged_in",{"create_project - создать проект", "my_projects - вывести список ваших текущих проектов", "find_projects - найти подходящий проект", "edit_info - изменить информацию", "check_notifications - проверить уведомления", "logout - выйти из системы", "help - просмотр доступных команд"}}
 	};
-	database->createUser("Thomas", "12345", 7, "c++, sex, programming, turbo", "SEX, monster energy), realno flexim");
-	database->createUser("GoldSwan", "pepega_cool", 6, "c++, programming, gaming, flex", "programming, flex, swag");
-	database->createUser("admin", "admin", 99, "programming, c++, flex, administration", "flex, beer, cool");
-	currentUser = database->getUser("Thomas");
-	database->createProject(currentUser, "Test", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "c++, programming");
-	database->getProject("Test")->addParticipant(currentUser);
-	currentUser->addProject(database->getProject("Test"));
-	database->getUser("Thomas")->addNewNotification(Notification(message, "test text owo", "admin", "Test"));
-	database->createProject(database->getUser("GoldSwan"), "Gaming", "Testit", "mnogo testit", "testint", "putin", "11/11/1111", "turbo");
-	database->getUser("Thomas")->addNewNotification(Notification(invitation, "hey bro here is a project to do!", "GoldSwan", "Gaming"));
-	database->getUser("admin")->addProject(database->getProject("Test"));
-	database->getProject("Test")->addParticipant(database->getUser("admin"));
-	database->getUser("GoldSwan")->addProject(database->getProject("Test"));
-	database->getProject("Test")->addParticipant(database->getUser("GoldSwan"));
+	database->createUser("Thomas", "12345", 7, "programming, c++, maths", "programming, style, design");
+	database->createUser("Vladimir", "pepega_cool", 6, "programming, c++, administration", "programming, javascript");
+	database->createUser("Oleg", "admin", 99, "programming, c++, design , administration", "programming");
+	database->createUser("Igor", "Igor", 10, "programming, c++, drawing , administration", "programming, drawing, design");
+	database->createProject(database->getUser("Thomas"), "Kursovaya_rabota", "programming project", "learn, code, be cool", "programming", "Miroslav", "25/12/2019", "programming, c++");
+	database->getProject("Kursovaya_rabota")->addParticipant(database->getUser("Thomas"));
+	database->getProject("Kursovaya_rabota")->addParticipant(database->getUser("Oleg"));
+	database->getUser("Oleg")->addProject(database->getProject("Kursovaya_rabota"));
+	database->getUser("Thomas")->addProject(database->getProject("Kursovaya_rabota"));
+	database->getUser("Thomas")->addNewNotification(Notification(message, "Отказ: я считаю, что вы не подходите под этот проект", "Oleg", "Biology"));
+	database->getUser("Thomas")->addNewNotification(Notification(notify, "Я бы хотел поучаствовать в вашем проекте!", "Igor", "Kursovaya_rabota"));
 }
 
 void InterfaceManager::init() {
@@ -35,6 +32,7 @@ void InterfaceManager::init() {
 	welcome();
 	do {
 		fflush(stdin);
+		std::cout << std::endl;
 		std::cin >> input;
 		std::cout << std::endl;
 		if (input == "exit")
@@ -60,17 +58,12 @@ void InterfaceManager::init() {
 			
 		else if (input == "help")
 			help();
-		else
-		{
-			std::cout << "Введена некорректная команда. Попробуйте еще раз." << std::endl;
-		}
+
 	} while (true);
 }
 
 void InterfaceManager::welcome() { // Welocome message.
 
-
-	std::cout << std::endl;
 	std::cout << "Combo-Meal Software, Peter the Great St.Petersburg Polytechnic University" << std::endl;
 	std::cout << "Используйте help для вывода доступных команд" << std::endl;
 
@@ -131,6 +124,7 @@ void InterfaceManager::login(std::string name, std::string password) {
 
 			std::cout << "Для просмотра доступных команд используйте help." << std::endl;
 			std::cout << "Для выхода из системы используйте logout." << std::endl;
+			std::cout << std::endl;
 			fflush(stdin);
 			std::getline(std::cin, input);
 			std::cout << std::endl;
@@ -163,16 +157,13 @@ void InterfaceManager::login(std::string name, std::string password) {
 				else
 					checkNotifications();
 			}
-			
-			else
-				std::cout << "Введена некорректная команда. Попробуйте еще раз. Введите help для просмотра всех команд." << std::endl;
 
 		} while (true);
 		
 	}
 	else {
 
-		std::cout << " Введено неверное имя или пароль. Попробуйте еще раз." << std::endl;
+		std::cout << "Введено неверное имя или пароль. Попробуйте еще раз." << std::endl;
 
 	}
 }
@@ -205,8 +196,10 @@ void InterfaceManager::editInfo() {
 		std::cout << "Какую информацию вы бы хотели изменить?" << std::endl;
 		std::cout << "введите одно из следующих: password, time, skills, interests" << std::endl;
 		std::cout << "Выйти - back" << std::endl;
+		std::cout << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
+		std::cout << std::endl;
 		if (input == "back")
 			break;
 		/*else if (input == "Имя"){  ВНИМАНИЕ! ИЗМЕНЕНИЕ ИМЕНИ НЕ ВЛИЯЕТ НА DATABASE!
@@ -255,6 +248,8 @@ void InterfaceManager::editInfo() {
 			std::cout << "(если время нужно уменьшить, то введите отрицательное число)" << std::endl;
 			std::getline(std::cin, input);
 			std::cout << std::endl;
+			if (input == "back")
+				break;
 			currentUser->changeInfo(3, input);
 			std::cout << "Время успешно изменено." << std::endl;
 
@@ -284,6 +279,7 @@ void InterfaceManager::editInfo() {
 			fflush(stdin);
 			std::cout << "Внимание! Список Ваших предметных областей будет удален, чтобы вы ввели новые. " << std::endl;
 			std::cout << "Чтобы продолжить, нажмите Enter. Чтобы вернуться, введите back." << std::endl;
+			std::cout << std::endl;
 			std::getline(std::cin, input);
 			std::cout << std::endl;
 			if (input == "back")
@@ -354,6 +350,7 @@ void InterfaceManager::checkNotifications() {
 		std::cout << std::endl;
 		std::cout << "Введите номер уведомления чтобы показать подробности" << std::endl;
 		std::cout << "Выйти - back" << std::endl;
+		std::cout << std::endl;
 		fflush(stdin);
 		std::getline(std::cin, input);
 		if (input == "back")
@@ -553,18 +550,30 @@ void InterfaceManager::createProject()
 void InterfaceManager::findProjects()
 {
 	fflush(stdin);
-	std::cout << "Выйти - back";
+	std::cout << "Выйти - back" << std::endl;
 	std::vector<Project*> temp = database->findProjects(currentUser->getPrerequisites());
 	std::map<std::string, Project*> tempcu = currentUser->getCurrentProjects();
-	for (int i = 0; i < temp.size(); i++)
+	bool flag = false;
+	while (flag == false)
 	{
-		if (tempcu.count(temp[i]->getName()) == 1)
-			temp.erase(temp.begin() + i);
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (tempcu.count(temp[i]->getName()) == 1)
+			{
+				temp.erase(temp.begin() + i);
+				break;
+			}
+			if (i == (temp.size() - 1))
+				flag = true;
+		}
+		if (temp.size() == 0)
+			flag = true;
 	}
 	std::cout << "Подходящие вам проекты:" << std::endl;
 	if (temp.size() == 0)
 	{
 		std::cout << "Подходящие проекты отсутсвуют" << std::endl;
+		std::cout << std::endl;
 		return;
 	}
 	for (int i = 0; i < temp.size(); i++)
@@ -573,9 +582,10 @@ void InterfaceManager::findProjects()
 	}
 	std::cout << std::endl;
 	std::cout << "Введите номер проекта, чтобы показать подробную информацию." << std::endl;
-	std::cout << "apply [number] - подать заявку на участие в проекте";
+	std::cout << "apply [number] - подать заявку на участие в проекте" << std::endl;
 	while (true)
 	{
+		std::cout << std::endl;
 		std::cin >> input;
 		if (input == "apply")
 		{
@@ -584,8 +594,10 @@ void InterfaceManager::findProjects()
 			std::string message;
 			std::cout << "Введите ваше сообщение." << std::endl;
 			std::getline(std::cin, message);
+			std::getline(std::cin, message);
 			Notification tempn = Notification(notify, message, currentUser->getName(), temp[std::stoi(input)]->getName());
 			temp[std::stoi(input)]->getInitiator()->addNewNotification(tempn);
+			std::cout << "Заявка отправлена!" << std::endl;
 		}
 		else
 			if (input == "back")
@@ -636,6 +648,7 @@ void InterfaceManager::findParticipants(std::string name)
 	std::cout << "invite [number] - отправить приглашение в проект" << std::endl;
 	while (true)
 	{
+		std::cout << std::endl;
 		std::cin >> input;
 		if (input == "invite")
 		{
@@ -643,6 +656,7 @@ void InterfaceManager::findParticipants(std::string name)
 			fflush(stdin);
 			std::string message;
 			std::cout << "Введите ваше сообщение." << std::endl;
+			std::getline(std::cin, message);
 			std::getline(std::cin, message);
 			Notification tempn = Notification(invitation, message, currentUser->getName(), name);
 			temp[std::stoi(input)]->addNewNotification(tempn);
@@ -670,6 +684,7 @@ void InterfaceManager::displayProjects()
 	if (projects.size() == 0)
 	{
 		std::cout << "Вы не состоите ни в одном проекте." << std::endl;
+		std::cout << std::endl;
 		return;
 	}
 	for (const std::pair<std::string, Project*> p : projects)
@@ -678,24 +693,41 @@ void InterfaceManager::displayProjects()
 	}
 	std::cout << "Введите имя проекта, чтобы показать подробную информацию." << std::endl;
 	std::cout << "edit [name] - изменить информацию о проекте (только для инициаторов и менеджеров проекта)" << std::endl;
-	std::cout << "find_participants [name] - найти участников для проекта" << std::endl;
+	std::cout << "find_participants [name] - найти участников для проекта (только для инициаторов и менеджеров проекта)" << std::endl;
 	while (true)
 	{
+		std::cout << std::endl;
 		std::cin >> input;
 		if (input == "edit")
 		{
 			std::cin >> name;
 			fflush(stdin);
-			if (currentUser->getName() == projects[name]->getInitiator()->getName() || currentUser->getName() == projects[name]->getManager()->getName())
+			if (currentUser->getName() == projects[name]->getInitiator()->getName())
 				editProject(name);
 			else
-				std::cout << "Вы не обладаете достаточными правами." << std::endl;
+				if(projects[name]->getManager() != NULL)
+					if(currentUser->getName() == projects[name]->getManager()->getName())
+						editProject(name);
+					else
+						std::cout << "Вы не обладаете достаточными правами." << std::endl;
+				else
+						std::cout << "Вы не обладаете достаточными правами." << std::endl;
 		}
 		else
 			if (input == "find_participants")
 			{
 				std::cin >> name;
-				findParticipants(name);
+				std::cout << std::endl;
+				if (currentUser->getName() == projects[name]->getInitiator()->getName())
+					findParticipants(name);
+				else
+					if (projects[name]->getManager() != NULL)
+						if (currentUser->getName() == projects[name]->getManager()->getName())
+							findParticipants(name);
+						else
+							std::cout << "Вы не обладаете достаточными правами." << std::endl;
+					else
+						std::cout << "Вы не обладаете достаточными правами." << std::endl;
 				std::cout << "Поиск участников завершен" << std::endl;
 			}
 			else
