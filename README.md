@@ -1,6 +1,6 @@
 # project-management-system
 
-This is a C++ class project. The goal was to develop a system for project management that lets you create a project, find people for your project (based on prerequisites), find a project to participate in (based on prerequisites). The program uses CLI interface.
+This is a C++ class project. The goal was to develop a system for project management that lets you create a project, find people for your project (based on prerequisites), find a project to participate in (based on prerequisites). The program uses command-line interface.
 
 # Main commands (there are more available during user registration / project creation):
 
